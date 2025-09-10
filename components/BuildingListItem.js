@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   line: {
     width: 5,
     height: 25,
-    backgroundColor: '#c00000', // A strong red color
+    backgroundColor: '#c00000',
     marginRight: 20,
   },
   title: {
