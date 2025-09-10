@@ -13,7 +13,7 @@ const SearchBar = ({ variant = 'map', value, onChangeText }) => {
 
   return (
     <View style={containerStyle}>
-      {/* Conditionally render map image or search icon based on the variant */}
+      // Conditionally render map image or search icon based on the variant
       {isMapVariant ? (
         <Image
           source={require('../assets/logo.png')}
