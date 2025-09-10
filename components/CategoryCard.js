@@ -7,7 +7,6 @@ import {
   ImageBackground,
 } from 'react-native';
 
-// Use a regular function to ensure clean exporting
 function CategoryCard({ imageSource, title, onPress }) {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
@@ -29,7 +28,7 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 15,
     marginBottom: 20,
-    backgroundColor: '#e0e0e0', // Added a background color for stability
+    backgroundColor: '#e0e0e0', 
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
