@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Feather';
 const Header = ({ title }) => {
   return (
     <View style={styles.container}>
-      {/* Left side: Logo and Title */}
+      //Left side: Logo and Title
       <View style={styles.titleContainer}>
         <Image
           source={require('../assets/logo.png')}
@@ -14,7 +14,7 @@ const Header = ({ title }) => {
         <Text style={styles.title}>{title}</Text>
       </View>
 
-      {/* Right side: Icons */}
+      //Right side: Icons
       <View style={styles.iconsContainer}>
         <TouchableOpacity style={styles.iconButton}>
           <Icon name="search" size={24} color="#000" />
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 10,
-    paddingHorizontal: 5, // Reduced horizontal padding to align with cards
+    paddingHorizontal: 5, 
     backgroundColor: '#fff',
     width: '100%',
   },
