@@ -8,14 +8,13 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-// The component is now "controlled" by its parent screen
 const ListItemCard = ({
   imageSource,
   title,
   description,
   onPress,
-  isBookmarked, // New prop to tell the card if it's saved
-  onBookmarkPress, // New prop to handle the tap event
+  isBookmarked, 
+  onBookmarkPress, 
 }) => {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
@@ -25,7 +24,6 @@ const ListItemCard = ({
         <Text style={styles.description} numberOfLines={2}>{description}</Text>
       </View>
       <TouchableOpacity onPress={onBookmarkPress} style={styles.bookmarkButton}>
-        {/* The icon now depends on the isBookmarked prop */}
         <Icon
           name={isBookmarked ? 'bookmark' : 'bookmark-outline'}
           size={24}
