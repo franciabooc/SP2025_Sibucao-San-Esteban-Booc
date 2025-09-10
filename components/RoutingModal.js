@@ -9,16 +9,14 @@ import {
   Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-
-// We can reuse the ListItemCard for the "Places you might want to visit" section
 import ListItemCard from './ListItemCard';
 
-// --- Mock Data ---
+//Mock Data
 const suggestedPlace = {
     id: 'p1',
     title: 'Library',
     description: 'The UNC Library serves as a central resource hub...',
-    image: require('../assets/lm-library.png') // Assuming this image exists
+    image: require('../assets/lm-library.png')
 };
 
 const RoutingModal = ({ visible, onClose }) => {
@@ -30,7 +28,7 @@ const RoutingModal = ({ visible, onClose }) => {
       onRequestClose={onClose}>
       <View style={styles.modalOverlay}>
         <View style={styles.modalContainer}>
-          {/* Draggable handle and close button */}
+          //Draggable handle and close button
           <View style={styles.header}>
             <View style={styles.handle} />
             <TouchableOpacity onPress={onClose} style={styles.closeButton}>
@@ -38,7 +36,7 @@ const RoutingModal = ({ visible, onClose }) => {
             </TouchableOpacity>
           </View>
 
-          {/* --- User Input Component --- */}
+          // User Input Component
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
@@ -52,7 +50,7 @@ const RoutingModal = ({ visible, onClose }) => {
             />
           </View>
 
-          {/* --- Route Details Component --- */}
+          // Route Details Component
           <View style={styles.routeDetailsContainer}>
             <Image
                 source={{ uri: 'https://placehold.co/600x400/e0e0e0/000000?text=Map+Preview' }}
@@ -66,14 +64,14 @@ const RoutingModal = ({ visible, onClose }) => {
             </View>
           </View>
 
-           {/* --- Suggested Places Component --- */}
+           // Suggested Places Component
            <View style={styles.suggestionsContainer}>
                <Text style={styles.suggestionsTitle}>Places you might want to visit</Text>
                 <ListItemCard
                     imageSource={suggestedPlace.image}
                     title={suggestedPlace.title}
                     description={suggestedPlace.description}
-                    isBookmarked={false} // Default state
+                    isBookmarked={false} 
                 />
            </View>
 
@@ -154,7 +152,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     suggestionsContainer:{
-        // Styles for the suggestions area if needed
     },
     suggestionsTitle: {
         fontSize: 18,
