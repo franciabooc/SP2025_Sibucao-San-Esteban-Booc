@@ -1,25 +1,32 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import { Feather as Icon } from '@expo/vector-icons';
 
-const Header = ({ title }) => {
+// 1. The component now accepts the isDarkMode prop
+const Header = ({ title, onProfilePress, isDarkMode }) => {
+  // 2. Define dynamic styles that change based on the prop
+  const containerStyle = [
+    styles.container,
+    isDarkMode && { backgroundColor: '#1e1e1e', borderBottomColor: '#333' }
+  ];
+  const titleStyle = [styles.title, isDarkMode && { color: '#fff' }];
+  const iconColor = isDarkMode ? '#fff' : '#000';
+
   return (
-    <View style={styles.container}>
-      {/* Left side: Logo and Title */}
+    <View style={containerStyle}>
       <View style={styles.titleContainer}>
         <Image
           source={require('../assets/logo.png')}
           style={styles.logo}
         />
-        <Text style={styles.title}>{title}</Text>
+        <Text style={titleStyle}>{title}</Text>
       </View>
 
-      {/* Right side: Icons */}
       <View style={styles.iconsContainer}>
         <TouchableOpacity style={styles.iconButton}>
-          <Icon name="search" size={24} color="#000" />
+          <Icon name="search" size={24} color={iconColor} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.iconButton}>
+        <TouchableOpacity style={styles.iconButton} onPress={onProfilePress}>
           <View style={styles.profileIconContainer}>
             <Icon name="user" size={18} color="#fff" />
           </View>
@@ -35,9 +42,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 10,
-    paddingHorizontal: 5, // Reduced horizontal padding to align with cards
+    paddingHorizontal: 5,
     backgroundColor: '#fff',
     width: '100%',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
   },
   titleContainer: {
     flexDirection: 'row',
@@ -51,6 +60,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: 'bold',
+    color: '#000',
   },
   iconsContainer: {
     flexDirection: 'row',
@@ -71,3 +81,4 @@ const styles = StyleSheet.create({
 });
 
 export default Header;
+

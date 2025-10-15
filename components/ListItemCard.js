@@ -6,26 +6,34 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 
-// The component is now "controlled" by its parent screen
+// 1. The component now accepts the isDarkMode prop
 const ListItemCard = ({
   imageSource,
   title,
   description,
   onPress,
-  isBookmarked, // New prop to tell the card if it's saved
-  onBookmarkPress, // New prop to handle the tap event
+  isBookmarked,
+  onBookmarkPress,
+  isDarkMode
 }) => {
+  // 2. Define dynamic styles that change based on the prop
+  const containerStyle = [
+    styles.container,
+    isDarkMode && { backgroundColor: '#1e1e1e' }
+  ];
+  const titleStyle = [styles.title, isDarkMode && { color: '#fff' }];
+  const descriptionStyle = [styles.description, isDarkMode && { color: '#ccc' }];
+
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity style={containerStyle} onPress={onPress}>
       <Image source={imageSource} style={styles.image} />
       <View style={styles.textContainer}>
-        <Text style={styles.title} numberOfLines={1}>{title}</Text>
-        <Text style={styles.description} numberOfLines={2}>{description}</Text>
+        <Text style={titleStyle} numberOfLines={1}>{title}</Text>
+        <Text style={descriptionStyle} numberOfLines={2}>{description}</Text>
       </View>
       <TouchableOpacity onPress={onBookmarkPress} style={styles.bookmarkButton}>
-        {/* The icon now depends on the isBookmarked prop */}
         <Icon
           name={isBookmarked ? 'bookmark' : 'bookmark-outline'}
           size={24}
@@ -67,6 +75,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
+    color: '#000',
   },
   description: {
     fontSize: 14,

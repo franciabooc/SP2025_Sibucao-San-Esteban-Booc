@@ -1,29 +1,57 @@
 {
-  "expo": {
-    "name": "go-unc-app",
-    "slug": "go-unc-app",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "edgeToEdgeEnabled": true
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
-  }
+
+"expo": {
+
+"name": "go-unc-app",
+
+"slug": "go-unc-app",
+
+"version": "1.0.0",
+
+"orientation": "portrait",
+
+"icon": "./assets/logo2.jpg",
+
+"userInterfaceStyle": "light",
+
+"newArchEnabled": true,
+
+"splash": {
+
+"image": "./assets/logo2.jpg",
+
+"resizeMode": "contain",
+
+"backgroundColor": "#ffffff"
+
+},
+
+"ios": {
+
+"supportsTablet": true
+
+},
+
+"android": {
+
+"adaptiveIcon": {
+
+"foregroundImage": "./assets/logo2.jpg",
+
+"backgroundColor": "#ffffff"
+
+},
+
+"edgeToEdgeEnabled": true,
+
+"package": "com.anonymous.gouncapp"
+
+},
+
+"web": {
+
+"favicon": "./assets/logo2.jpg"
+ }
+ }
+
 }

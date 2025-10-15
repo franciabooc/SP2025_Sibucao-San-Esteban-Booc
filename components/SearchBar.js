@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity, Image } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import { Feather as Icon } from '@expo/vector-icons';
 
-const SearchBar = ({ variant = 'map', value, onChangeText }) => {
-  // This logic correctly checks which variant to display
+// 1. The component now accepts an onProfilePress prop
+const SearchBar = ({ variant = 'map', value, onChangeText, onProfilePress }) => {
   const isMapVariant = variant === 'map';
 
   const containerStyle = [
@@ -13,7 +13,6 @@ const SearchBar = ({ variant = 'map', value, onChangeText }) => {
 
   return (
     <View style={containerStyle}>
-      {/* Conditionally render map image or search icon based on the variant */}
       {isMapVariant ? (
         <Image
           source={require('../assets/logo.png')}
@@ -31,7 +30,8 @@ const SearchBar = ({ variant = 'map', value, onChangeText }) => {
         onChangeText={onChangeText}
       />
 
-      <TouchableOpacity>
+      {/* 2. The profile icon is now a button that calls onProfilePress */}
+      <TouchableOpacity onPress={onProfilePress}>
         <View style={styles.profileIconContainer}>
           <Icon name="user" size={18} color="#fff" />
         </View>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import { Feather as Icon } from '@expo/vector-icons';
 
 // The component now accepts an `activeTab` prop to know which button is selected
 const BottomNavBar = ({ activeTab, onPressExplore, onPressSaved, onPressList, onPressNotify }) => {

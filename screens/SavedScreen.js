@@ -14,35 +14,42 @@ import ListItemCard from '../components/ListItemCard';
 
 // --- Mock Data ---
 const initialSavedItems = [
-    { id: 'sv1', category: 'Rooms', title: 'JH27', description: 'JH27 is a computer-focused learning space used for technology-related learning activities.', image: { uri: 'https://placehold.co/200x200/A9A9A9/FFFFFF?text=JH27' } },
-    { id: 'sv2', category: 'Landmarks', title: 'Chapel', description: 'The UNC Chapel is a spiritual and reflective gatherings within the university.', image: { uri: 'https://placehold.co/200x200/A9A9A9/FFFFFF?text=Chapel' } },
-    { id: 'sv3', category: 'Building', title: 'Science Building', description: 'The Science Building consists of classrooms, faculty offices, and laboratories that support science-related academic activities.', image: { uri: 'https://placehold.co/200x200/A9A9A9/FFFFFF?text=Science+Bldg' } },
-    { id: 'sv4', category: 'Landmarks', title: 'Covered Court', description: 'The UNC Covered Court is a multi-purpose facility used for student activities and sports.', image: { uri: 'https://placehold.co/200x200/A9A9A9/FFFFFF?text=Court' } },
-    { id: 'sv5', category: 'Food Stalls', title: 'Sheeshabowls', description: 'An on-campus canteen that provides basic meals and refreshments.', image: { uri: 'https://placehold.co/200x200/A9A9A9/FFFFFF?text=Sheeshabowls' } },
+    { id: 'sv1', category: 'Rooms', title: 'JH27', description: 'JH27 is a computer-focused learning space...', image: { uri: 'https://placehold.co/200x200/A9A9A9/FFFFFF?text=JH27' } },
+    { id: 'sv2', category: 'Landmarks', title: 'Chapel', description: 'The UNC Chapel is a spiritual and reflective...', image: { uri: 'https://placehold.co/200x200/A9A9A9/FFFFFF?text=Chapel' } },
+    { id: 'sv3', category: 'Building', title: 'Science Building', description: 'The Science Building consists of classrooms...', image: { uri: 'https://placehold.co/200x200/A9A9A9/FFFFFF?text=Science+Bldg' } },
 ];
 
 const filters = ['Building', 'Rooms', 'Offices', 'Food Stalls', 'Landmarks'];
 
-export default function SavedScreen() {
+// The component now accepts onProfilePress and isDarkMode as props
+export default function SavedScreen({ onProfilePress, isDarkMode }) {
     const [activeFilter, setActiveFilter] = useState('Building');
-    // 1. Manage the list of saved items in state
     const [savedItems, setSavedItems] = useState(initialSavedItems);
 
-    // 2. This function removes an item from the list
     const handleRemoveBookmark = (itemIdToRemove) => {
         setSavedItems(currentItems =>
             currentItems.filter(item => item.id !== itemIdToRemove)
         );
     };
 
+    // --- Dynamic Styles ---
+    const pageContainerStyle = [
+        styles.pageContainer,
+        isDarkMode && { backgroundColor: '#121212' }
+    ];
+    const noItemsTextStyle = [
+        styles.noItemsText,
+        isDarkMode && { color: '#ccc' }
+    ];
+
     const filteredItems = savedItems.filter(item => {
         return item.category.toLowerCase().includes(activeFilter.toLowerCase());
     });
 
-
     return (
-        <View style={styles.pageContainer}>
-            <Header title="Saved Locations" />
+        <View style={pageContainerStyle}>
+            {/* The onProfilePress and isDarkMode props are passed to the Header */}
+            <Header title="Saved Locations" onProfilePress={onProfilePress} isDarkMode={isDarkMode} />
 
             <View style={styles.filterButtonsContainer}>
                 {filters.map(filter => (
@@ -65,13 +72,13 @@ export default function SavedScreen() {
                             description={item.description}
                             imageSource={item.image}
                             onPress={() => Alert.alert('Tapped on', item.title)}
-                            // 3. Pass the new props to the card
-                            isBookmarked={true} // It's always true on this screen
+                            isBookmarked={true}
                             onBookmarkPress={() => handleRemoveBookmark(item.id)}
+                            isDarkMode={isDarkMode}
                         />
                     ))
                 ) : (
-                    <Text style={styles.noItemsText}>No saved items in this category.</Text>
+                    <Text style={noItemsTextStyle}>No saved items in this category.</Text>
                 )}
             </ScrollView>
         </View>
