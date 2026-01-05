@@ -9,7 +9,6 @@ import FAQItem from '../components/FAQItem';
 import profileIcon from '../assets/profile-icon.png';
 import goUncLogo from '../assets/logo2.jpg';
 
-
 // --- Mock Data ---
 const emergencyContacts = [
     { id: '1', icon: 'shield', title: 'Police', number: '(054) 811-71-61' },
@@ -17,20 +16,15 @@ const emergencyContacts = [
     { id: '3', icon: 'home', title: 'University Clinic', number: '(054) 871-28-25 loc 141' },
     { id: '4', icon: 'alert-triangle', title: 'Fire Department', number: '(054) 811-71-71' },
 ];
-
 const faqData = [
-  { question: 'How do I find a specific building or room?', answer: 'Navigate to the "List" tab from the bottom navigation bar...' },
-  { question: 'How does the routing feature work?', answer: 'On the "Explore" screen, tap the route icon to open the routing panel...' },
-  { question: 'What are "Saved Locations"?', answer: 'When viewing a specific room, landmark, or food stall, you can tap the bookmark icon to save it...' },
+  { question: 'How do I find a specific building or room?', answer: 'Navigate to the "List" tab...' },
+  { question: 'How does the routing feature work?', answer: 'On the "Explore" screen, tap the route icon...' },
+  { question: 'What are "Saved Locations"?', answer: 'When viewing a specific room... you can tap the bookmark icon to save it.' },
 ];
-
 const feedbackCategories = ['Map Error', 'Bug Report', 'Suggestion', 'Other'];
-
 
 export default function ProfileScreen({ onBackPress }) {
     const [currentView, setCurrentView] = useState('main');
-    
-    // --- State for toggles and forms ---
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [eventsEnabled, setEventsEnabled] = useState(true);
     const [maintenanceEnabled, setMaintenanceEnabled] = useState(true);
@@ -39,8 +33,6 @@ export default function ProfileScreen({ onBackPress }) {
     const [feedbackEmail, setFeedbackEmail] = useState('');
     const [feedbackMessage, setFeedbackMessage] = useState('');
 
-
-    // --- Sub-Component for the Main Profile View ---
     const MainProfileView = () => (
         <>
             <View style={styles.customHeader}>
@@ -83,7 +75,6 @@ export default function ProfileScreen({ onBackPress }) {
         </>
     );
 
-    // --- Sub-Component for the Manage Notifications View (Now filled in) ---
     const ManageNotificationsView = () => (
         <>
             <View style={styles.customHeader}>
@@ -92,7 +83,7 @@ export default function ProfileScreen({ onBackPress }) {
                 <View style={{ width: 24 }} />
             </View>
             <ScrollView>
-                <View style={styles.section}>
+                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>ANNOUNCEMENTS FROM ADMIN</Text>
                     <Text style={styles.sectionDescription}>Receive updates about university events, maintenance schedules, and other important campus news.</Text>
                     <View style={styles.sectionContent}>
@@ -103,7 +94,7 @@ export default function ProfileScreen({ onBackPress }) {
                 </View>
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>SUBMITTED REPORTS</Text>
-                    <Text style={styles.sectionDescription}>Get notified when the status of a map error or feedback you've submitted has been updated.</Text>
+                     <Text style={styles.sectionDescription}>Get notified when the status of a map error or feedback you've submitted has been updated.</Text>
                     <View style={styles.sectionContent}>
                         <ProfileListItem icon="check-circle" text="Report Status Updates" type="toggle" value={reportsEnabled} onValueChange={setReportsEnabled} />
                     </View>
@@ -111,8 +102,7 @@ export default function ProfileScreen({ onBackPress }) {
             </ScrollView>
         </>
     );
-
-    // --- Sub-Component for the Emergency Contacts View (Now filled in) ---
+    
     const EmergencyContactsView = () => (
         <>
             <View style={styles.customHeader}>
@@ -127,7 +117,6 @@ export default function ProfileScreen({ onBackPress }) {
         </>
     );
 
-    // --- Sub-Component for the Help & Support View (Now filled in) ---
     const HelpAndSupportView = () => (
         <>
             <View style={styles.customHeader}>
@@ -137,14 +126,11 @@ export default function ProfileScreen({ onBackPress }) {
             </View>
             <ScrollView style={styles.contactList}>
                 <Text style={styles.faqHeader}>Frequently Asked Questions</Text>
-                {faqData.map((item, index) => (
-                    <FAQItem key={index} question={item.question} answer={item.answer} />
-                ))}
+                {faqData.map((item, index) => (<FAQItem key={index} question={item.question} answer={item.answer} />))}
             </ScrollView>
         </>
     );
 
-    // --- Sub-Component for the Send Feedback View (Now filled in) ---
     const SendFeedbackView = () => {
         const handleSubmit = () => {
             if (!feedbackMessage) {
@@ -185,7 +171,6 @@ export default function ProfileScreen({ onBackPress }) {
         );
     };
 
-    // --- Sub-Component for the About Go-UNC View ---
     const AboutGoUNCView = () => (
         <>
             <View style={styles.customHeader}>
@@ -207,12 +192,13 @@ export default function ProfileScreen({ onBackPress }) {
 
     return (
         <SafeAreaView style={styles.container}>
-            {currentView === 'main' && <MainProfileView />}
-            {currentView === 'manageNotifications' && <ManageNotificationsView />}
-            {currentView === 'emergencyContacts' && <EmergencyContactsView />}
-            {currentView === 'helpAndSupport' && <HelpAndSupportView />}
-            {currentView === 'sendFeedback' && <SendFeedbackView />}
-            {currentView === 'aboutGoUNC' && <AboutGoUNCView />}
+            {currentView === 'main' ? <MainProfileView /> :
+             currentView === 'manageNotifications' ? <ManageNotificationsView /> :
+             currentView === 'emergencyContacts' ? <EmergencyContactsView /> :
+             currentView === 'helpAndSupport' ? <HelpAndSupportView /> :
+             currentView === 'sendFeedback' ? <SendFeedbackView /> :
+             currentView === 'aboutGoUNC' ? <AboutGoUNCView /> :
+             null}
         </SafeAreaView>
     );
 }
