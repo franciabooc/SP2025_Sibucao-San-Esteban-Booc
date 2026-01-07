@@ -5,28 +5,28 @@ import { Feather as Icon } from '@expo/vector-icons';
 const BottomNavBar = ({ activeTab, onPressExplore, onPressSaved, onPressList, onPressNotify }) => {
   return (
     <View style={styles.container}>
-      //Explore Button
+      {/* Explore Button */}
       <TouchableOpacity
         style={[styles.iconButton, activeTab === 'Explore' && styles.activeButton]}
         onPress={onPressExplore}>
         <Icon name="compass" size={28} color={activeTab === 'Explore' ? '#FFFFFF' : '#333'} />
       </TouchableOpacity>
 
-      //Bookmark Button
+      {/* Bookmark Button */}
       <TouchableOpacity
         style={[styles.iconButton, activeTab === 'Saved' && styles.activeButton]}
         onPress={onPressSaved}>
         <Icon name="bookmark" size={28} color={activeTab === 'Saved' ? '#FFFFFF' : '#333'} />
       </TouchableOpacity>
 
-      //List Button
+      {/* List Button */}
       <TouchableOpacity
         style={[styles.iconButton, activeTab === 'List' && styles.activeButton]}
         onPress={onPressList}>
         <Icon name="list" size={28} color={activeTab === 'List' ? '#FFFFFF' : '#333'} />
       </TouchableOpacity>
 
-      //Notifications Button
+      {/* Notifications Button */}
       <TouchableOpacity
         style={[styles.iconButton, activeTab === 'Notify' && styles.activeButton]}
         onPress={onPressNotify}>
@@ -50,12 +50,12 @@ const styles = StyleSheet.create({
   iconButton: {
     width: 50,
     height: 50,
-    borderRadius: 25, 
+    borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
   },
   activeButton: {
-    backgroundColor: '#D32F2F', 
+    backgroundColor: '#D32F2F',
   },
 });
 

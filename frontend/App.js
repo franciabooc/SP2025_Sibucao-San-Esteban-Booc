@@ -16,8 +16,8 @@ export default function App() {
   const [currentView, setCurrentView] = useState('main');
 
   const handleTabPress = (tabName) => {
-      setActiveTab(tabName);
-      setCurrentView('main'); // Ensure we go back to the main view when changing tabs
+    setActiveTab(tabName);
+    setCurrentView('main'); // Ensure we go back to the main view when changing tabs
   }
 
   const openProfile = () => setCurrentView('profile');
@@ -41,24 +41,24 @@ export default function App() {
 
   // This function now handles all top-level navigation
   const renderCurrentView = () => {
-      if (currentView === 'profile') {
-          // It now only needs to pass the closeProfile function
-          return <ProfileScreen onBackPress={closeProfile} />;
-      }
-      
-      // The 'main' view is the default, showing tabs and the bottom bar
-      return (
-        <>
-          <View style={styles.content}>{renderMainContent()}</View>
-          <BottomNavBar
-            activeTab={activeTab}
-            onPressExplore={() => handleTabPress('Explore')}
-            onPressSaved={() => handleTabPress('Saved')}
-            onPressList={() => handleTabPress('List')}
-            onPressNotify={() => handleTabPress('Notify')}
-          />
-        </>
-      );
+    if (currentView === 'profile') {
+      // It now only needs to pass the closeProfile function
+      return <ProfileScreen onBackPress={closeProfile} />;
+    }
+
+    // The 'main' view is the default, showing tabs and the bottom bar
+    return (
+      <>
+        <View style={styles.content}>{renderMainContent()}</View>
+        <BottomNavBar
+          activeTab={activeTab}
+          onPressExplore={() => handleTabPress('Explore')}
+          onPressSaved={() => handleTabPress('Saved')}
+          onPressList={() => handleTabPress('List')}
+          onPressNotify={() => handleTabPress('Notify')}
+        />
+      </>
+    );
   }
 
   return (
@@ -71,14 +71,14 @@ export default function App() {
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: '#fff' },
   content: { flex: 1 },
-  pageContainer: { 
-    flex: 1, 
-    justifyContent: 'center', 
-    alignItems: 'center' 
+  pageContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  header: { 
-    fontSize: 22, 
-    fontWeight: 'bold' 
+  header: {
+    fontSize: 22,
+    fontWeight: 'bold'
   },
 });
 

@@ -4,25 +4,26 @@ import { StyleSheet, View, TextInput } from 'react-native';
 const RouteInput = ({
   startValue,
   onStartChange,
+  onStartFocus, // New prop
   endValue,
   onEndChange,
+  onEndFocus,   // New prop
 }) => {
   return (
     <View>
       <TextInput
         style={styles.input}
         placeholder="Starting Location"
-        placeholderTextColor="#8e8e93"
         value={startValue}
         onChangeText={onStartChange}
+        onFocus={onStartFocus} // Trigger when user taps this box
       />
-      {/* A margin is added to create space, replacing the line image */}
       <TextInput
         style={[styles.input, { marginTop: 15 }]}
         placeholder="Ending Location"
-        placeholderTextColor="#8e8e93"
         value={endValue}
         onChangeText={onEndChange}
+        onFocus={onEndFocus}   // Trigger when user taps this box
       />
     </View>
   );
