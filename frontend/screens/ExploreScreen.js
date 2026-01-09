@@ -16,6 +16,7 @@ import InteractiveMap from '../unc_map/InteractiveMap';
 import { locations, nameToNodeMap } from '../unc_map/mapSvg'; // Added nameToNodeMap import
 import { BiAStar } from '../unc_map/BiAStar';
 import nodesData from '../unc_map/nodes.json';
+import RouteOverlay from '../components/RouteOverlay';
 
 // --- 1. SUB-COMPONENTS DEFINED OUTSIDE TO FIX INPUT FOCUS BUG ---
 
@@ -40,7 +41,7 @@ const MapView = ({ startLocation, endLocation, paths, searchQuery, setSearchQuer
 
 const RoutingView = ({
   setCurrentView, startLocation, setStartLocation, endLocation, setEndLocation,
-  suggestions, onSelectSuggestion, setActiveInput, paths
+  suggestions, onSelectSuggestion, setActiveInput, paths, onStartPress
 }) => (
   <View style={styles.pageContainer}>
     <View style={styles.customHeader}>
@@ -82,8 +83,8 @@ const RoutingView = ({
           <InteractiveMap startNode={startLocation} endNode={endLocation} paths={paths} />
         </View>
         <View style={styles.timeEstimateContainer}>
-          <Text style={styles.timeText}>Estimated Time: 5mins</Text>
-          <TouchableOpacity style={styles.startButton} onPress={() => setCurrentView('map')}>
+          <Text style={styles.timeText}>Click "Start" to begin routing</Text>
+          <TouchableOpacity style={styles.startButton} onPress={onStartPress}>
             <Text style={styles.startButtonText}>Start</Text>
           </TouchableOpacity>
         </View>
@@ -101,6 +102,7 @@ export default function ExploreScreen({ onProfilePress, isDarkMode }) {
   const [endLocation, setEndLocation] = useState('');
   const [activeInput, setActiveInput] = useState(null);
   const [paths, setPaths] = useState({ primary: [], alternative: [] });
+  const [isRoutingActive, setIsRoutingActive] = useState(false);
 
   // 1. Calculate Paths when locations change
   useEffect(() => {
@@ -136,6 +138,20 @@ export default function ExploreScreen({ onProfilePress, isDarkMode }) {
     setActiveInput(null);
   };
 
+  const handleReset = () => {
+    setStartLocation(null);
+    setEndLocation(null);
+    setPaths({ primary: [], alternative: [] });
+    setIsRoutingActive(false);
+  };
+
+  const handleStartRouting = () => {
+    if (startLocation && endLocation) {
+      setIsRoutingActive(true);
+      setCurrentView('map');
+    }
+  };
+
   return (
     <View style={styles.container}>
       {currentView === 'map' ? (
@@ -160,6 +176,16 @@ export default function ExploreScreen({ onProfilePress, isDarkMode }) {
           onSelectSuggestion={handleSelectSuggestion}
           setActiveInput={setActiveInput}
           paths={paths}
+          onStartPress={handleStartRouting}
+        />
+      )}
+
+      {/* Show overlay when both start and end are set */}
+      {isRoutingActive && (
+        <RouteOverlay
+          startLocation={startLocation}
+          endLocation={endLocation}
+          onReset={handleReset}
         />
       )}
     </View>

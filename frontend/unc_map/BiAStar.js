@@ -5,18 +5,19 @@ import nodesDataDefault from './nodes.json';
 
 export class BiAStar {
     constructor(nodesDataParam) {
-        // allow passing nodesData or fall back to local file
+        // Initializing nodes and connections from JSON files
         const source = nodesDataParam && nodesDataParam.nodes ? nodesDataParam : nodesDataDefault;
         this.nodes = source.nodes || {};
         this.masterConnections = (graphData && graphData.connections) ? graphData.connections : {};
+        // currentConnections lets us modify weights (penalties) without ruining the original data
         this.currentConnections = JSON.parse(JSON.stringify(this.masterConnections));
     }
 
     heuristic(u, v) {
+        // Estimates distance between two nodes using the Pythagorean theorem (straight-line distance)
         const uNode = this.nodes[u];
         const vNode = this.nodes[v];
         if (!uNode || !vNode) {
-            // missing node(s) -> return 0 so heuristic doesn't break the search
             console.warn(`BiAStar.heuristic: missing node u=${u}(${!!uNode}), v=${v}(${!!vNode})`);
             return 0;
         }
@@ -24,12 +25,14 @@ export class BiAStar {
     }
 
     getEntrancesForBuilding(buildingNameOrId) {
+        // Converts a building name (like "Library") into its node IDs (like ["18"])
         const entry = nameToNodeMap[buildingNameOrId];
         if (entry) return Array.isArray(entry) ? entry : [String(entry)];
         return [String(buildingNameOrId)];
     }
 
     findTwoPaths(startInput, endInput) {
+        // Handles the logic for generating both the primary and alternative routes
         const startEntrances = this.getEntrancesForBuilding(startInput);
         const endEntrances = this.getEntrancesForBuilding(endInput);
 
@@ -38,19 +41,13 @@ export class BiAStar {
         let bestStartNode = null;
         let bestEndNode = null;
 
+        // Nested loop to find the shortest path among all possible entrance/exit combinations
         for (let sId of startEntrances) {
-            if (!this.nodes[String(sId)]) {
-                console.warn(`findTwoPaths: start entrance ${sId} not found in nodes; skipping`);
-                continue;
-            }
+            if (!this.nodes[String(sId)]) continue;
             for (let tId of endEntrances) {
-                if (!this.nodes[String(tId)]) {
-                    console.warn(`findTwoPaths: end entrance ${tId} not found in nodes; skipping`);
-                    continue;
-                }
+                if (!this.nodes[String(tId)]) continue;
                 if (String(sId) === String(tId)) continue;
 
-                // fresh connections for each trial
                 this.currentConnections = JSON.parse(JSON.stringify(this.masterConnections));
 
                 const pathNodes = this.query(sId, tId);
@@ -70,7 +67,7 @@ export class BiAStar {
             return { primary: [], alternative: [], weight: Infinity };
         }
 
-        // alternative path using same entrance pair
+        // Logic for Alternative Path: Penalize the primary route so the algorithm picks a different way
         this.currentConnections = JSON.parse(JSON.stringify(this.masterConnections));
         this.penalizePath(bestPrimaryPath);
         const alternativePathNodes = this.query(bestStartNode, bestEndNode);
@@ -83,6 +80,7 @@ export class BiAStar {
     }
 
     calculatePathCost(pathIds) {
+        // Totals the weight of all edges in a finished path
         if (!pathIds || pathIds.length < 2) return 0;
         let cost = 0;
         for (let i = 0; i < pathIds.length - 1; i++) {
@@ -91,14 +89,14 @@ export class BiAStar {
             if (this.currentConnections[u] && this.currentConnections[u][v] != null) {
                 cost += this.currentConnections[u][v];
             } else {
-                // missing edge — penalize heavily to avoid choosing broken paths
-                cost += 1e6;
+                cost += 1e6; // Large penalty for broken/missing paths
             }
         }
         return cost;
     }
 
     penalizePath(pathIds) {
+        // Adds weight to the primary path nodes to force the query to find a different alternative
         if (!pathIds || pathIds.length < 2) return;
         for (let i = 0; i < pathIds.length - 1; i++) {
             const u = String(pathIds[i]);
@@ -113,6 +111,7 @@ export class BiAStar {
     }
 
     query(s, t) {
+        // The Bidirectional A* search engine: starts from BOTH ends and meets in the middle
         if (!s || !t) return [];
         s = String(s);
         t = String(t);
@@ -130,19 +129,22 @@ export class BiAStar {
         let visitedBackward = new Set();
         let meetingNode = null;
 
+        // Alternating search from start and end to optimize speed
         while (qForward.length > 0 && qBackward.length > 0) {
+            // Forward step
             qForward.sort((a, b) => a[0] - b[0]);
             let [_, u] = qForward.shift();
             if (visitedForward.has(u)) continue;
             visitedForward.add(u);
-            if (visitedBackward.has(u)) { meetingNode = u; break; }
+            if (visitedBackward.has(u)) { meetingNode = u; break; } // Check if paths met
             this.expand(u, forwardDist, qForward, forwardParent, t);
 
+            // Backward step
             qBackward.sort((a, b) => a[0] - b[0]);
             let [__, v] = qBackward.shift();
             if (visitedBackward.has(v)) continue;
             visitedBackward.add(v);
-            if (visitedForward.has(v)) { meetingNode = v; break; }
+            if (visitedForward.has(v)) { meetingNode = v; break; } // Check if paths met
             this.expand(v, backwardDist, qBackward, backwardParent, s);
         }
 
@@ -150,30 +152,28 @@ export class BiAStar {
     }
 
     expand(u, dists, queue, parents, targetId) {
+        // Core expansion logic: checks neighbors and calculates their priorities (g + h)
         const uKey = String(u);
-        if (dists[u] === undefined) {
-            console.warn(`expand: distance for ${uKey} undefined — skipping expansion`);
-            return;
-        }
         const neighbors = this.currentConnections[uKey] || {};
         const Types = CampusCellType || { OBSTACLE: 1, RESTRICTED: 9, CONSTRUCTION: 10, STAIRS: 6 };
 
         for (let v in neighbors) {
             const nodeInfo = this.nodes[v];
-            if (!nodeInfo) {
-                console.warn(`expand: node ${v} missing from nodes — skipping neighbor`);
-                continue;
-            }
+            if (!nodeInfo) continue;
+
+            // Safety check: Skip impassable areas
             if ([Types.OBSTACLE, Types.RESTRICTED, Types.CONSTRUCTION].includes(nodeInfo.type)) {
                 continue;
             }
 
             let weight = neighbors[v];
+            // Penalty logic: make stairs slightly less desirable than flat ground
             if (nodeInfo.type === Types.STAIRS) weight += 2;
 
             let newDist = dists[u] + weight;
             if (dists[v] === undefined || newDist < dists[v]) {
                 dists[v] = newDist;
+                // A* Priority: Current distance + half of the heuristic estimate
                 let priority = newDist + (this.heuristic(v, targetId) * 0.5);
                 queue.push([priority, v]);
                 parents[v] = u;
@@ -182,30 +182,29 @@ export class BiAStar {
     }
 
     reconstructPathNodes(fParent, bParent, meetingNode) {
+        // Stitches the forward and backward search results together into one full path
         if (!meetingNode) return [];
         let path = [];
         let curr = meetingNode;
         while (curr !== null) {
-            path.unshift(curr);
+            path.unshift(curr); // Backtrack forward parents
             curr = fParent[curr];
         }
         curr = bParent[meetingNode];
         while (curr !== null) {
-            if (curr !== meetingNode) path.push(curr);
+            if (curr !== meetingNode) path.push(curr); // Backtrack backward parents
             curr = bParent[curr];
         }
         return path;
     }
 
     nodesToCoords(pathIds) {
+        // Converts the final list of node IDs into {x, y} coordinates for the Map to draw
         if (!pathIds || pathIds.length === 0) return [];
         const out = [];
         for (let id of pathIds) {
             const key = String(id);
-            if (!this.nodes[key]) {
-                console.warn(`nodesToCoords: node ${key} missing — skipping`);
-                continue;
-            }
+            if (!this.nodes[key]) continue;
             out.push({ x: this.nodes[key].x, y: this.nodes[key].y });
         }
         return out;

@@ -57,7 +57,7 @@ const RoutingModal = ({ visible, onClose }) => {
               style={styles.mapPreview}
             />
             <View style={styles.timeEstimateContainer}>
-              <Text style={styles.timeText}>Estimated Time: 5mins</Text>
+              <Text style={styles.timeText}>Click "Start" to begin routing</Text>
               <TouchableOpacity style={styles.startButton}>
                 <Text style={styles.startButtonText}>Start</Text>
               </TouchableOpacity>
