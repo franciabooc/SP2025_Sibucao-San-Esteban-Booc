@@ -59,5 +59,4 @@ const styles = StyleSheet.create({
   },
 });
 
-// This is the most important line. It MUST be here.
 export default CategoryCard;

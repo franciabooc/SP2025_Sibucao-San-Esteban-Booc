@@ -2,9 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Switch } from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
 
-// 1. The component now accepts an isDarkMode prop
 const ProfileListItem = ({ icon, text, type = 'chevron', value, onValueChange, onPress, isDarkMode }) => {
-  // 2. Text and icon colors are now dynamic based on the isDarkMode prop
   const textColor = isDarkMode ? '#fff' : '#333';
   const iconColor = isDarkMode ? '#fff' : '#333';
 

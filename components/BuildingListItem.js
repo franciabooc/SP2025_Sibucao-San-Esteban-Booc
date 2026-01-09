@@ -1,9 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-// 1. Accept the isDarkMode prop
 const BuildingListItem = ({ title, onPress, isDarkMode }) => {
-  // 2. Define a dynamic style for the text color
   const titleStyle = [styles.title, isDarkMode && { color: '#fff' }];
 
   return (

@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 
-// 1. The component now accepts the isDarkMode prop
 const ListItemCard = ({
   imageSource,
   title,
@@ -18,7 +17,7 @@ const ListItemCard = ({
   onBookmarkPress,
   isDarkMode
 }) => {
-  // 2. Define dynamic styles that change based on the prop
+
   const containerStyle = [
     styles.container,
     isDarkMode && { backgroundColor: '#1e1e1e' }

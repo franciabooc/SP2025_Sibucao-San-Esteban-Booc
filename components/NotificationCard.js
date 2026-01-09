@@ -2,18 +2,13 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image, Alert } from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
 
-// The component accepts onPress for tapping the card, and specific handlers for menu items
 const NotificationCard = ({ notification, onPress, onMarkAsUnread, onDelete }) => {
   const cardStyle = [
     styles.card,
     !notification.isRead && styles.newCard,
   ];
 
-  // This function creates the pop-up menu when the three dots are pressed
   const handleOptionsPress = () => {
-    // We stop the event from bubbling up to the main card's onPress
-    // This is not strictly necessary in React Native but is good practice
-    
     Alert.alert(
       'Notification Options',
       `What would you like to do with "${notification.title}"?`,
@@ -44,7 +39,6 @@ const NotificationCard = ({ notification, onPress, onMarkAsUnread, onDelete }) =
           <Text style={styles.title}>{notification.title}</Text>
           <Text style={styles.timestamp}>{notification.timestamp}</Text>
         </View>
-        {/* The three-dot menu button calls the new handler */}
         <TouchableOpacity style={styles.optionsButton} onPress={handleOptionsPress}>
           <Icon name="more-vertical" size={24} color="#666" />
         </TouchableOpacity>

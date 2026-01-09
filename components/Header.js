@@ -2,9 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
 
-// 1. The component now accepts the isDarkMode prop
 const Header = ({ title, onProfilePress, isDarkMode }) => {
-  // 2. Define dynamic styles that change based on the prop
   const containerStyle = [
     styles.container,
     isDarkMode && { backgroundColor: '#1e1e1e', borderBottomColor: '#333' }

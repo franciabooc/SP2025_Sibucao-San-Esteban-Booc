@@ -4,7 +4,7 @@ import { Feather as Icon } from '@expo/vector-icons';
 
 const ContactCard = ({ icon, title, number }) => {
   const handleCallPress = () => {
-    const phoneNumber = `tel:${number.replace(/\s/g, '')}`; // Remove spaces for the link
+    const phoneNumber = `tel:${number.replace(/\s/g, '')}`; 
     Linking.canOpenURL(phoneNumber)
       .then(supported => {
         if (!supported) {
