@@ -1,0 +1,80 @@
+# ============================================================
+# GOUNC_ADMIN PROJECT .GITIGNORE
+# Frontend: Expo / React Native
+# Backend: Flask / Python
+# ============================================================
+
+# ---------------------------
+# Node / Expo dependencies
+# ---------------------------
+node_modules/
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# ---------------------------
+# Native builds
+# ---------------------------
+ios/
+android/
+.kotlin/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# ---------------------------
+# Metro bundler
+# ---------------------------
+.metro-health-check*
+
+# ---------------------------
+# Debug / Logs
+# ---------------------------
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+*.log
+
+# ---------------------------
+# macOS & System Files
+# ---------------------------
+.DS_Store
+*.pem
+AppData/
+
+# ---------------------------
+# Local environment files
+# ---------------------------
+.env
+.env*.local
+
+# ---------------------------
+# TypeScript build artifacts
+# ---------------------------
+*.tsbuildinfo
+
+# ---------------------------
+# Python / Flask backend
+# ---------------------------
+venv/
+__pycache__/
+*.pyc
+instance/
+*.sqlite3
+*.db
+
+# ---------------------------
+# IDE / Editor configs
+# ---------------------------
+.vscode/
+.idea/
+
+# ---------------------------
+# Misc
+# ---------------------------
+*.bak
+*.tmp
