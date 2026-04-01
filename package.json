@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
+<<<<<<< HEAD
     "expo": "~54.0.33",
     "expo-status-bar": "~3.0.9",
     "react": "^19.1.0",
@@ -19,6 +20,17 @@
     "react-native-svg": "^15.12.1",
     "react-native-vector-icons": "^10.2.0",
     "react-native-web": "0.21.0"
+=======
+    "expo": "~54.0.31",
+    "expo-status-bar": "~3.0.9",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-safe-area-context": "~5.6.0",
+    "react-native-svg": "15.12.1",
+    "react-native-vector-icons": "^10.3.0",
+    "react-native-web": "^0.21.0"
+>>>>>>> 0530c2b7aea88051a356ec3ac9f6ac9b205a2e62
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
