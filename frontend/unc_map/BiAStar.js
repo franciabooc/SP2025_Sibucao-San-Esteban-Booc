@@ -98,14 +98,23 @@ export class BiAStar {
     penalizePath(pathIds) {
         // Adds weight to the primary path nodes to force the query to find a different alternative
         if (!pathIds || pathIds.length < 2) return;
-        for (let i = 0; i < pathIds.length - 1; i++) {
+
+        // Allow the first and last segments to be shared without penalty 
+        // (so both paths can easily exit/enter the same building doors)
+        let startIndex = (pathIds.length > 4) ? 1 : 0;
+        let endIndex = (pathIds.length > 4) ? pathIds.length - 2 : pathIds.length - 1;
+
+        for (let i = startIndex; i < endIndex; i++) {
             const u = String(pathIds[i]);
             const v = String(pathIds[i + 1]);
+
+            // Multiply the weight by 2.0 (100% penalty) instead of a massive +500 wall.
+            // This encourages taking another route, but doesn't completely forbid sharing this route if needed.
             if (this.currentConnections[u] && this.currentConnections[u][v] != null) {
-                this.currentConnections[u][v] += 500;
+                this.currentConnections[u][v] *= 2.0;
             }
             if (this.currentConnections[v] && this.currentConnections[v][u] != null) {
-                this.currentConnections[v][u] += 500;
+                this.currentConnections[v][u] *= 2.0;
             }
         }
     }

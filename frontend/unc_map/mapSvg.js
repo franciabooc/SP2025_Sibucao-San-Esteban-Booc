@@ -2,22 +2,23 @@ import * as React from "react";
 import Svg, { Rect, G, Path, Ellipse, Circle, Text, Polyline } from "react-native-svg";
 import nodesData from "./nodes.json";
 import { Dimensions } from "react-native";
+import buildingEntrancesData from "./buildingEntrances.json";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
-// Shared location list for suggestions
+
+// ========== GROUPMATE INTEGRATION ==========
+// Merge groupmate's building data with manual landmarks/gates
+const buildingLocationsFromGroupmate = buildingEntrancesData.buildings.map(b => ({
+    name: b.name,
+    type: 'building',
+    // Use primary entrance coords for the marker position
+    x: b.entrances.find(e => e.type === 'main')?.x || b.entrances[0]?.x,
+    y: b.entrances.find(e => e.type === 'main')?.y || b.entrances[0]?.y,
+}));
+
+// Shared location list for suggestions (merges groupmate's buildings + existing landmarks)
 export const locations = [
-    { name: 'UNC Library', type: 'building', x: 759, y: 745 },
-    { name: 'UNC Chapel', type: 'building', x: 950, y: 580 },
-    { name: 'UNC Covered Court', type: 'building', x: 650, y: 540 },
-    { name: 'AMS Building', type: 'building', x: 850, y: 300 },
-    { name: 'JH Building', type: 'building', x: 480, y: 310 },
-    { name: 'DHS Building', type: 'building', x: 887, y: 680 },
-    { name: 'EN Building', type: 'building', x: 290, y: 590 },
-    { name: 'ME Building', type: 'building', x: 200, y: 526 },
-    { name: 'NB Building', type: 'building', x: 660, y: 700 },
-    { name: 'HS Building', type: 'building', x: 510, y: 600 },
-    { name: 'SP Building', type: 'building', x: 300, y: 387 },
-    { name: 'Science Bldg', type: 'building', x: 330, y: 690 },
+    ...buildingLocationsFromGroupmate,
     { name: 'Flagpole', type: 'landmark', x: 823, y: 441.9 },
     { name: 'UNC Toblerone', type: 'landmark', x: 914.5, y: 515 },
     { name: 'UNC Fountain', type: 'landmark', x: 943.5, y: 479 },
@@ -29,29 +30,26 @@ export const locations = [
     { name: 'Second Gate', type: 'gate', x: 296, y: 310 },
 ];
 
-// 1. Translation Map (Make sure these match your 'locations' array names EXACTLY)
+// ========== NODE MAPPING (Groupmate's entrances + manual nodes) ==========
+// Create mapping from groupmate's buildings
+const buildingNameToNodeMap = {};
+buildingEntrancesData.buildings.forEach(building => {
+    buildingNameToNodeMap[building.name] = building.entrances.map(e => e.nodeId);
+});
+
+// 1. Translation Map (combines groupmate data + manual mappings)
 export const nameToNodeMap = {
-    "UNC Library": ["18"],
-    "UNC Chapel": ["24"],
-    "UNC Covered Court": ["20", "21", "22", "23"], // North, South, East, West entrances
-    "AMS Building": ["3", "4"],
-    "JH Building": ["6", "7", "8", "69"],           // Multi-wing access
-    "DHS Building": ["19"],
-    "EN Building": ["12", "27", "28"],
-    "ME Building": ["11"],
-    "NB Building": ["17"],
-    "HS Building": ["14", "15", "16"],
-    "SP Building": ["9", "10"],
-    "Science Bldg": ["13", "28"],
+    ...buildingNameToNodeMap, // <- Groupmate's buildings (auto-populated from buildingEntrances.json)
+    // Manual landmarks and gates (kept for reference)
     "Flagpole": ["53"],
-    "UNC Toblerone": ["31"],
+    "UNC Toblerone": ["97"],
     "UNC Fountain": ["32"],
-    "UNC Arch": ["33"],
+    "UNC Arch": ["55"],
     "DHS Monument": ["34"],
-    "Eco Canteen": ["30"],
-    "Main Gate Entrance": ["1"],
-    "Main Gate Exit": ["25"],
-    "Second Gate": ["26"]
+    "Eco Canteen": ["96"],
+    "Main Gate Entrance": ["25"],
+    "Main Gate Exit": ["26"],
+    "Second Gate": ["27"]
 };
 const SVGComponent = (props) => {
     const { startNode, endNode, paths = { primary: [], alternative: [] } } = props;

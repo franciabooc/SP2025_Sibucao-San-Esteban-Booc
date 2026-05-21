@@ -1,419 +1,104 @@
 {
   "nodes": {
-    "1": {
-      "id": "entrance_maingate",
-      "x": 1099,
-      "y": 524.5,
-      "type": 4
-    },
-    "2": {
-      "id": "intersection_1",
-      "x": 1004,
-      "y": 488,
-      "type": 2
-    },
-    "3": {
-      "id": "ams_entrance_1",
-      "x": 908,
-      "y": 447,
-      "type": 4
-    },
-    "4": {
-      "id": "ams_entrance_2",
-      "x": 741,
-      "y": 229,
-      "type": 4
-    },
-    "5": {
-      "id": "intersection_21",
-      "x": 742,
-      "y": 240,
-      "type": 2
-    },
-    "6": {
-      "id": "jh_entrance_1",
-      "x": 625,
-      "y": 256,
-      "type": 4
-    },
-    "7": {
-      "id": "jh_entrance_2",
-      "x": 365,
-      "y": 341,
-      "type": 4
-    },
-    "8": {
-      "id": "jh_entrance_3",
-      "x": 333,
-      "y": 341,
-      "type": 4
-    },
-    "9": {
-      "id": "sp_entrance_1",
-      "x": 300,
-      "y": 387,
-      "type": 4
-    },
-    "10": {
-      "id": "sp_entrance_2",
-      "x": 257,
-      "y": 473,
-      "type": 4
-    },
-    "11": {
-      "id": "me_entrance",
-      "x": 200,
-      "y": 526,
-      "type": 4
-    },
-    "12": {
-      "id": "en_entrance_1",
-      "x": 374,
-      "y": 537,
-      "type": 4
-    },
-    "13": {
-      "id": "sc_entrance_1",
-      "x": 398,
-      "y": 623,
-      "type": 4
-    },
-    "14": {
-      "id": "hs_entrance_1",
-      "x": 445,
-      "y": 545,
-      "type": 4
-    },
-    "15": {
-      "id": "hs_entrance_2",
-      "x": 484,
-      "y": 557,
-      "type": 4
-    },
-    "16": {
-      "id": "hs_entrance_3",
-      "x": 626,
-      "y": 623,
-      "type": 4
-    },
-    "17": {
-      "id": "nb_entrance_1",
-      "x": 680,
-      "y": 648,
-      "type": 4
-    },
-    "18": {
-      "id": "lib_entrance",
-      "x": 778,
-      "y": 673,
-      "type": 4
-    },
-    "19": {
-      "id": "dhs_entrance",
-      "x": 887,
-      "y": 619,
-      "type": 4
-    },
-    "20": {
-      "id": "cc_entrance_1",
-      "x": 701,
-      "y": 503,
-      "type": 4
-    },
-    "21": {
-      "id": "cc_entrance_2",
-      "x": 593,
-      "y": 457,
-      "type": 4
-    },
-    "22": {
-      "id": "cc_entrance_3",
-      "x": 563,
-      "y": 533,
-      "type": 4
-    },
-    "23": {
-      "id": "cc_entrance_4",
-      "x": 656,
-      "y": 584,
-      "type": 4
-    },
-    "24": {
-      "id": "chapel_entrance",
-      "x": 932,
-      "y": 545,
-      "type": 4
-    },
-    "25": {
-      "id": "exit_maingate",
-      "x": 1093,
-      "y": 546.5,
-      "type": 12
-    },
-    "26": {
-      "id": "exit_secondgate",
-      "x": 304,
-      "y": 319,
-      "type": 12
-    },
-    "27": {
-      "id": "en_entrance_2",
-      "x": 277,
-      "y": 529,
-      "type": 4
-    },
-    "28": {
-      "id": "en_entrance_3",
-      "x": 306,
-      "y": 608,
-      "type": 4
-    },
-    "29": {
-      "id": "sc_entrance_2",
-      "x": 315,
-      "y": 653,
-      "type": 4
-    },
-    "30": {
-      "id": "eco_canteen",
-      "x": 260,
-      "y": 644.5,
-      "type": 8
-    },
-    "31": {
-      "id": "unc_toblerone",
-      "x": 914.5,
-      "y": 492,
-      "type": 8
-    },
-    "32": {
-      "id": "unc_fountain",
-      "x": 943.5,
-      "y": 479,
-      "type": 8
-    },
-    "33": {
-      "id": "unc_arch",
-      "x": 999.5,
-      "y": 498,
-      "type": 8
-    },
-    "34": {
-      "id": "dhs_monument",
-      "x": 836.5,
-      "y": 696,
-      "type": 8
-    },
-    "35": {
-      "id": "intersection_2",
-      "x": 994,
-      "y": 512,
-      "type": 2
-    },
-    "36": {
-      "id": "intersection_3",
-      "x": 936,
-      "y": 499,
-      "type": 2
-    },
-    "37": {
-      "id": "intersection_4",
-      "x": 908,
-      "y": 459,
-      "type": 2
-    },
-    "38": {
-      "id": "intersection_5",
-      "x": 875,
-      "y": 445,
-      "type": 2
-    },
-    "39": {
-      "id": "intersection_6",
-      "x": 645,
-      "y": 262,
-      "type": 2
-    },
-    "40": {
-      "id": "intersection_7",
-      "x": 374,
-      "y": 358,
-      "type": 2
-    },
-    "41": {
-      "id": "intersection_8",
-      "x": 327,
-      "y": 375,
-      "type": 2
-    },
-    "42": {
-      "id": "intersection_9",
-      "x": 267,
-      "y": 499,
-      "type": 2
-    },
-    "43": {
-      "id": "intersection_9_2",
-      "x": 317,
-      "y": 352,
-      "type": 2
-    },
-    "44": {
-      "id": "intersection_10",
-      "x": 375,
-      "y": 443,
-      "type": 2
-    },
-    "45": {
-      "id": "intersection_11",
-      "x": 401,
-      "y": 523,
-      "type": 2
-    },
-    "46": {
-      "id": "intersection_12",
-      "x": 441,
-      "y": 515,
-      "type": 2
-    },
-    "47": {
-      "id": "intersection_13",
-      "x": 492,
-      "y": 539,
-      "type": 2
-    },
-    "48": {
-      "id": "intersection_14",
-      "x": 634,
-      "y": 609,
-      "type": 2
-    },
-    "49": {
-      "id": "intersection_15",
-      "x": 684,
-      "y": 631,
-      "type": 2
-    },
-    "50": {
-      "id": "intersection_16",
-      "x": 782,
-      "y": 662,
-      "type": 2
-    },
-    "51": {
-      "id": "intersection_17",
-      "x": 842,
-      "y": 685,
-      "type": 2
-    },
-    "52": {
-      "id": "intersection_18",
-      "x": 879,
-      "y": 611,
-      "type": 2
-    },
-    "53": {
-      "id": "intersection_20",
-      "x": 936,
-      "y": 499,
-      "type": 2
-    },
-    "54": {
-      "id": "intersection_22",
-      "x": 629,
-      "y": 268,
-      "type": 2
-    },
-    "55": {
-      "id": "intersection_23",
-      "x": 529,
-      "y": 305,
-      "type": 2
-    },
-    "56": {
-      "id": "intersection_24",
-      "x": 517,
-      "y": 321,
-      "type": 2
-    },
-    "57": {
-      "id": "intersection_25",
-      "x": 483,
-      "y": 330,
-      "type": 2
-    },
-    "58": {
-      "id": "intersection_26",
-      "x": 497,
-      "y": 326,
-      "type": 2
-    },
-    "59": {
-      "id": "intersection_27",
-      "x": 466,
-      "y": 322,
-      "type": 2
-    },
-    "60": {
-      "id": "intersection_28",
-      "x": 920,
-      "y": 537,
-      "type": 2
-    },
-    "61": {
-      "id": "intersection_29",
-      "x": 561,
-      "y": 445,
-      "type": 2
-    },
-    "62": {
-      "id": "intersection_30",
-      "x": 398,
-      "y": 608,
-      "type": 2
-    },
-    "63": {
-      "id": "intersection_31",
-      "x": 311,
-      "y": 633,
-      "type": 2
-    },
-    "64": {
-      "id": "intersection_32",
-      "x": 645,
-      "y": 611,
-      "type": 2
-    },
-    "65": {
-      "id": "intersection_33",
-      "x": 531,
-      "y": 523,
-      "type": 2
-    },
-    "66": {
-      "id": "intersection_34",
-      "x": 519,
-      "y": 550,
-      "type": 2
-    },
-    "67": {
-      "id": "intersection_35",
-      "x": 533,
-      "y": 517,
-      "type": 2
-    },
-    "68": {
-      "id": "intersection_36",
-      "x": 559,
-      "y": 450,
-      "type": 2
-    },
-    "69": {
-      "id": "jh_entrance_3_2",
-      "x": 486,
-      "y": 301,
-      "type": 4
-    }
-  },
-  "connections": {}
+    "1": { "id": "bt_1", "x": 1046, "y": 504.5, "type": 2 },
+    "2": { "id": "bt_2", "x": 1040.5, "y": 528, "type": 2 },
+    "3": { "id": "bt_3", "x": 960.5, "y": 504, "type": 2 },
+    "4": { "id": "bt_4", "x": 960.5, "y": 469, "type": 2 },
+    "5": { "id": "bt_5", "x": 903.5, "y": 468, "type": 2 },
+    "6": { "id": "bt_6", "x": 783.5, "y": 474, "type": 2 },
+    "7": { "id": "bt_7", "x": 602.5, "y": 354, "type": 2 },
+    "8": { "id": "bt_8", "x": 546.5, "y": 482, "type": 2 },
+    "9": { "id": "bt_9", "x": 568.5, "y": 576, "type": 2 },
+    "10": { "id": "bt_10", "x": 794.5, "y": 277, "type": 2 },
+    "11": { "id": "bt_11", "x": 685.5, "y": 251, "type": 2 },
+    "12": { "id": "bt_12", "x": 583.5, "y": 286, "type": 2 },
+    "13": { "id": "bt_13", "x": 416, "y": 341, "type": 2 },
+    "14": { "id": "bt_14", "x": 349, "y": 367, "type": 2 },
+    "15": { "id": "bt_15", "x": 349, "y": 406, "type": 2 },
+    "16": { "id": "bt_16", "x": 410, "y": 478, "type": 2 },
+    "17": { "id": "bt_17", "x": 389, "y": 486, "type": 2 },
+    "18": { "id": "bt_18", "x": 400, "y": 569, "type": 2 },
+    "19": { "id": "bt_19", "x": 325, "y": 474, "type": 2 },
+    "20": { "id": "bt_20", "x": 739, "y": 647, "type": 2 },
+    "21": { "id": "bt_21", "x": 813, "y": 673, "type": 2 },
+    "22": { "id": "bt_22", "x": 862, "y": 648, "type": 2 },
+    "23": { "id": "bt_23", "x": 900, "y": 572, "type": 2 },
+    "24": { "id": "bt_24", "x": 928, "y": 518, "type": 2 },
+    "25": { "id": "entrance_maingate", "x": 1099, "y": 524.5, "type": 12 },
+    "26": { "id": "exit_maingate", "x": 1093, "y": 546.5, "type": 12 },
+    "27": { "id": "exit_secondgate", "x": 304, "y": 319, "type": 12 },
+    "28": { "id": "ams_entrance_1", "x": 908, "y": 447, "type": 4 },
+    "29": { "id": "ams_entrance_2", "x": 741, "y": 229, "type": 4 },
+    "30": { "id": "jh_entrance_1", "x": 625, "y": 256, "type": 4 },
+    "31": { "id": "jh_entrance_2", "x": 365, "y": 341, "type": 4 },
+    "32": { "id": "jh_entrance_3", "x": 333, "y": 341, "type": 4 },
+    "33": { "id": "jh_entrance_3_2", "x": 486, "y": 301, "type": 4 },
+    "34": { "id": "sp_entrance_1", "x": 300, "y": 387, "type": 4 },
+    "35": { "id": "sp_entrance_2", "x": 257, "y": 473, "type": 4 },
+    "36": { "id": "me_entrance", "x": 200, "y": 526, "type": 4 },
+    "37": { "id": "en_entrance_1", "x": 374, "y": 537, "type": 4 },
+    "38": { "id": "en_entrance_2", "x": 277, "y": 529, "type": 4 },
+    "39": { "id": "en_entrance_3", "x": 306, "y": 608, "type": 4 },
+    "40": { "id": "sc_entrance_1", "x": 398, "y": 627, "type": 4 },
+    "41": { "id": "sc_entrance_2", "x": 315, "y": 653, "type": 4 },
+    "42": { "id": "hs_entrance_1", "x": 445, "y": 545, "type": 4 },
+    "43": { "id": "hs_entrance_2", "x": 484, "y": 557, "type": 4 },
+    "44": { "id": "hs_entrance_3", "x": 626, "y": 623, "type": 4 },
+    "45": { "id": "nb_entrance_1", "x": 680, "y": 648, "type": 4 },
+    "46": { "id": "lib_entrance", "x": 778, "y": 673, "type": 4 },
+    "47": { "id": "dhs_entrance", "x": 887, "y": 619, "type": 4 },
+    "48": { "id": "cc_entrance_1", "x": 701, "y": 503, "type": 4 },
+    "49": { "id": "cc_entrance_2", "x": 593, "y": 457, "type": 4 },
+    "50": { "id": "cc_entrance_3", "x": 563, "y": 533, "type": 4 },
+    "51": { "id": "cc_entrance_4", "x": 656, "y": 584, "type": 4 },
+    "52": { "id": "chapel_entrance", "x": 932, "y": 545, "type": 4 },
+    "53": { "id": "intersection_1", "x": 1004, "y": 488, "type": 2 },
+    "54": { "id": "intersection_2", "x": 994, "y": 512, "type": 2 },
+    "55": { "id": "intersection_3", "x": 936, "y": 499, "type": 2 },
+    "56": { "id": "intersection_4", "x": 908, "y": 459, "type": 2 },
+    "57": { "id": "intersection_5", "x": 875, "y": 445, "type": 2 },
+    "58": { "id": "intersection_6", "x": 645, "y": 262, "type": 2 },
+    "59": { "id": "intersection_7", "x": 374, "y": 358, "type": 2 },
+    "60": { "id": "intersection_8", "x": 327, "y": 375, "type": 2 },
+    "61": { "id": "intersection_9", "x": 267, "y": 499, "type": 2 },
+    "62": { "id": "intersection_9_2", "x": 317, "y": 352, "type": 2 },
+    "63": { "id": "intersection_10", "x": 375, "y": 443, "type": 2 },
+    "64": { "id": "intersection_11", "x": 401, "y": 523, "type": 2 },
+    "65": { "id": "intersection_12", "x": 441, "y": 513, "type": 2 },
+    "66": { "id": "intersection_13", "x": 492, "y": 539, "type": 2 },
+    "67": { "id": "intersection_14", "x": 634, "y": 609, "type": 2 },
+    "68": { "id": "intersection_15", "x": 684, "y": 631, "type": 2 },
+    "69": { "id": "intersection_16", "x": 782, "y": 662, "type": 2 },
+    "70": { "id": "intersection_17", "x": 842, "y": 685, "type": 2 },
+    "71": { "id": "intersection_18", "x": 879, "y": 611, "type": 2 },
+    "72": { "id": "intersection_20", "x": 936, "y": 499, "type": 2 },
+    "73": { "id": "intersection_21", "x": 742, "y": 240, "type": 2 },
+    "74": { "id": "intersection_22", "x": 629, "y": 268, "type": 2 },
+    "75": { "id": "intersection_23", "x": 529, "y": 305, "type": 2 },
+    "76": { "id": "intersection_24", "x": 517, "y": 321, "type": 2 },
+    "77": { "id": "intersection_25", "x": 483, "y": 330, "type": 2 },
+    "78": { "id": "intersection_26", "x": 497, "y": 326, "type": 2 },
+    "79": { "id": "intersection_27", "x": 466, "y": 322, "type": 2 },
+    "80": { "id": "intersection_28", "x": 920, "y": 537, "type": 2 },
+    "81": { "id": "intersection_29", "x": 561, "y": 445, "type": 2 },
+    "82": { "id": "intersection_30", "x": 397, "y": 620, "type": 2 },
+    "83": { "id": "intersection_31", "x": 311, "y": 633, "type": 2 },
+    "84": { "id": "intersection_32", "x": 645, "y": 611, "type": 2 },
+    "85": { "id": "intersection_33", "x": 531, "y": 523, "type": 2 },
+    "86": { "id": "intersection_34", "x": 519, "y": 550, "type": 2 },
+    "87": { "id": "intersection_35", "x": 533, "y": 517, "type": 2 },
+    "88": { "id": "intersection_36", "x": 559, "y": 450, "type": 2 },
+    "89": { "id": "intersection_37", "x": 845, "y": 323, "type": 2 },
+    "90": { "id": "intersection_38", "x": 755, "y": 240, "type": 2 },
+    "91": { "id": "intersection_39", "x": 728, "y": 237, "type": 2 },
+    "92": { "id": "intersection_40", "x": 317, "y": 451, "type": 2 },
+    "93": { "id": "intersection_41", "x": 311, "y": 635, "type": 2 },
+    "94": { "id": "intersection_42", "x": 923.5, "y": 455, "type": 2 },
+    "95": { "id": "eco_canteen", "x": 297, "y": 636, "type": 8 },
+    "96": { "id": "ECO Canteen", "x": 260, "y": 644.5, "type": 11 },
+    "97": { "id": "UNC Toblerone", "x": 914.5, "y": 492, "type": 8 },
+    "98": { "id": "UNC Fountain", "x": 943.5, "y": 479, "type": 8 },
+    "99": { "id": "UNC Arch", "x": 999.5, "y": 498, "type": 8 },
+    "100": { "id": "DHS Monument", "x": 836.5, "y": 696, "type": 8 }
+  }
 }

@@ -17,6 +17,8 @@ import { locations, nameToNodeMap } from '../unc_map/mapSvg'; // Added nameToNod
 import { BiAStar } from '../unc_map/BiAStar';
 import nodesData from '../unc_map/nodes.json';
 import RouteOverlay from '../components/RouteOverlay';
+// ========== GROUPMATE INTEGRATION ==========
+import { getPrimaryEntrance, getAccessibleEntrances } from '../unc_map/buildingDataMerger';
 
 // --- 1. SUB-COMPONENTS DEFINED OUTSIDE TO FIX INPUT FOCUS BUG ---
 
@@ -95,6 +97,25 @@ const RoutingView = ({
 
 // --- 2. MAIN COMPONENT ---
 
+/**
+ * ========== GROUPMATE INTEGRATION HELPER ==========
+ * Intelligently select an entrance for a building
+ * Prioritizes: primary entrance > accessible entrances > first available
+ */
+const selectSmartEntrance = (buildingName) => {
+  // Try to get primary entrance first
+  const primaryEntrance = getPrimaryEntrance(buildingName);
+  if (primaryEntrance) return primaryEntrance;
+
+  // Fall back to first accessible entrance
+  const accessibleEntrances = getAccessibleEntrances(buildingName);
+  if (accessibleEntrances.length > 0) return accessibleEntrances[0];
+
+  // Fall back to first available node
+  const nodeIds = nameToNodeMap[buildingName];
+  return nodeIds && nodeIds.length > 0 ? nodeIds[0] : buildingName;
+};
+
 export default function ExploreScreen({ onProfilePress, isDarkMode }) {
   const [currentView, setCurrentView] = useState('map');
   const [searchQuery, setSearchQuery] = useState('');
@@ -104,12 +125,17 @@ export default function ExploreScreen({ onProfilePress, isDarkMode }) {
   const [paths, setPaths] = useState({ primary: [], alternative: [] });
   const [isRoutingActive, setIsRoutingActive] = useState(false);
 
-  // 1. Calculate Paths when locations change
+  // ========== UPDATED: Path calculation with smart entrance selection ==========
   useEffect(() => {
     if (startLocation && endLocation) {
       const solver = new BiAStar(nodesData);
+
+      // ========== GROUPMATE INTEGRATION: Select best entrance for each location ==========
+      const startNode = selectSmartEntrance(startLocation);
+      const endNode = selectSmartEntrance(endLocation);
+
       // findTwoPaths now automatically tests all sIds vs tIds internally
-      const result = solver.findTwoPaths(startLocation, endLocation);
+      const result = solver.findTwoPaths(startNode, endNode);
 
       if (result && result.primary.length > 0) {
         setPaths(result);

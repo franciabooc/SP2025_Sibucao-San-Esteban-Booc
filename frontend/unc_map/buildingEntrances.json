@@ -1,0 +1,78 @@
+{
+  "buildings": [
+    {
+      "id": "library",
+      "name": "UNC Library",
+      "entrances": [
+        {
+          "nodeId": "46",
+          "name": "Main Entrance",
+          "x": 778,
+          "y": 673,
+          "type": "main",
+          "accessible": true
+        }
+      ]
+    },
+    {
+      "id": "ams_building",
+      "name": "AMS Building",
+      "entrances": [
+        {
+          "nodeId": "28",
+          "name": "North Entrance",
+          "x": 908,
+          "y": 447,
+          "type": "main",
+          "accessible": true
+        },
+        {
+          "nodeId": "29",
+          "name": "South Entrance",
+          "x": 741,
+          "y": 229,
+          "type": "secondary",
+          "accessible": false
+        }
+      ]
+    },
+    {
+      "id": "jh_building",
+      "name": "JH Building",
+      "entrances": [
+        {
+          "nodeId": "30",
+          "name": "East Wing",
+          "x": 625,
+          "y": 256,
+          "type": "main",
+          "accessible": true
+        },
+        {
+          "nodeId": "31",
+          "name": "West Wing",
+          "x": 365,
+          "y": 341,
+          "type": "secondary",
+          "accessible": false
+        },
+        {
+          "nodeId": "32",
+          "name": "Central",
+          "x": 333,
+          "y": 341,
+          "type": "secondary",
+          "accessible": true
+        },
+        {
+          "nodeId": "33",
+          "name": "North Extension",
+          "x": 486,
+          "y": 301,
+          "type": "secondary",
+          "accessible": false
+        }
+      ]
+    }
+  ]
+}
