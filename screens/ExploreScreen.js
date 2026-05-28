@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { StyleSheet, View, TouchableOpacity, Image, Text, ScrollView, Keyboard, Alert } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text, ScrollView, Keyboard, Alert } from 'react-native';
 import { Feather as Icon } from '@expo/vector-icons';
 
 // --- Shared Components ---
@@ -12,9 +12,22 @@ import RouteOverlay from '../components/RouteOverlay';
 // --- Centralized Asset Exports Map Hub ---
 import { 
   AmsF1Map, AmsF2Map, AmsF3Map, amsRouting,
-  meRouting, enRouting, jhRouting, dhsRouting,
+  meRouting, enRouting, jhRouting, dhsRouting, hsRouting, nbRouting, scRouting, stpRouting,
+  chapelRouting, libRouting, spRouting,
   DhsF1Map, EnF1Map, EnF2Map, JhF1Map, JhF2Map, MeF1Map, MeF2Map,
-  CampusMap, campusRouting
+  CampusMap, campusRouting, campusLinks, buildingBridgeLinks,
+
+  // User-facing selectable floor records pulled dynamically from your central index
+  amsF1Data, amsF2Data, amsF3Data,
+  dhsF1Data, dhsF2Data, dhsF3Data, dhsF4Data,
+  enF1Data, enF2Data,
+  hsF1Data, hsF2Data,
+  jhF1Data, jhF2Data, jhF3Data,
+  meF1Data, meF2Data,
+  nbF1Data, nbF2Data, nbF3Data,
+  scF1Data, scF2Data, scF3Data,
+  stpF1Data, stpF2Data,
+  chapelData, libData, spData 
 } from '../unc_maps';
 
 // --- Logic Modules ---
@@ -22,11 +35,11 @@ import { BiAStar } from '../unc_maps/bidirectional_a_star';
 import { generateInstructions } from '../unc_maps/PathInterpreter';
 import { getNodeFloor } from '../unc_maps/FloorUtils';
 
-// Pull groupmate's static metadata assets safely out of the custom canvas file 
-import { locations, nameToNodeMap } from '../unc_maps/buildings/campus_map';
+// Friendly outdoor locations metadata mappings
+import { locations, nameToNodeMap } from '../unc_maps/campus_map';
 
 // =========================================================================
-// 1. ISOLATED SUB-COMPONENTS (FIXES THE KEYBOARD DISMISS FOCUS LOSS BUG)
+// 1. ISOLATED SUB-COMPONENTS (FIXED: Cleaned of all un-encapsulated comments)
 // =========================================================================
 
 const MapView = ({ 
@@ -36,7 +49,6 @@ const MapView = ({
   onProfilePress, isDarkMode, setCurrentView 
 }) => (
   <View style={styles.viewContainer}>
-    {/* Visual Map Render Viewports Layer */}
     <ScrollView 
       maximumZoomScale={3} 
       minimumZoomScale={1}
@@ -74,7 +86,6 @@ const MapView = ({
       </ScrollView>
     </ScrollView>
 
-    {/* Floating HUD controls mapping */}
     <View style={styles.overlayContainer}>
       <SearchBar
         variant="map"
@@ -88,17 +99,15 @@ const MapView = ({
       </TouchableOpacity>
     </View>
 
-    {/* Multi-floor switch overlay */}
-    {activeBuilding !== 'campus' && floorCount > 1 && (
+    {activeBuilding !== 'campus' && floorCount > 1 ? (
       <FloorSwitcher 
         currentFloor={currentFloor} 
         onFloorChange={(floor) => setCurrentFloor(floor)} 
         totalAvailableFloors={floorCount}
       />
-    )}
+    ) : null}
 
-    {/* Exit Indoor view returning map back to global coordinates shortcut */}
-    {activeBuilding !== 'campus' && (
+    {activeBuilding !== 'campus' ? (
       <TouchableOpacity 
         style={styles.campusResetButton}
         onPress={() => { 
@@ -112,18 +121,18 @@ const MapView = ({
         <Icon name="map" size={18} color="#fff" />
         <Text style={styles.resetButtonText}>Exit Building</Text>
       </TouchableOpacity>
-    )}
+    ) : null}
 
-    {/* Active direction steps interpret panel text */}
-    {currentFloorDirections.length > 0 && (
+    {currentFloorDirections.length > 0 ? (
       <DirectionsBox directions={currentFloorDirections} />
-    )}
+    ) : null}
   </View>
 );
 
 const RoutingView = ({
   setCurrentView, startLocation, setStartLocation, endLocation, setEndLocation,
-  suggestions, onSelectSuggestion, setActiveInput, calculatedPath, alternativePath, onStartPress
+  suggestions, onSelectSuggestion, setActiveInput, calculatedPath, alternativePath, onStartPress,
+  fullSearchableRooms
 }) => (
   <View style={styles.pageContainer}>
     <View style={styles.customHeader}>
@@ -142,23 +151,23 @@ const RoutingView = ({
         endValue={endLocation}
         onEndChange={setEndLocation}
         onEndFocus={() => setActiveInput('end')}
+        roomData={fullSearchableRooms}
       />
 
-      {/* Dynamic Search Autocomplete Suggestions dropdown overlay */}
-      {suggestions.length > 0 && (
+      {suggestions.length > 0 ? (
         <View style={styles.suggestionsBox}>
           {suggestions.map((item, index) => (
             <TouchableOpacity
               key={`suggest-${index}`}
               style={styles.suggestionItem}
-              onPress={() => onSelectSuggestion(item.name)}
+              onPress={() => onSelectSuggestion(item)} 
             >
               <Icon name="map-pin" size={14} color="#2196F3" />
               <Text style={styles.suggestionText}>{item.name}</Text>
             </TouchableOpacity>
           ))}
         </View>
-      )}
+      ) : null}
 
       <View style={styles.routeDetailsContainer}>
         <View style={styles.previewWrapper}>
@@ -186,7 +195,6 @@ export default function ExploreScreen({ onProfilePress, isDarkMode }) {
   const [endLocation, setEndLocation] = useState('');
   const [activeInput, setActiveInput] = useState(null);
   
-  // Framework Core Routing Tracking states
   const [activeBuilding, setActiveBuilding] = useState('campus'); 
   const [currentFloor, setCurrentFloor] = useState(1);
   const [calculatedPath, setCalculatedPath] = useState([]);
@@ -194,7 +202,236 @@ export default function ExploreScreen({ onProfilePress, isDarkMode }) {
   const [currentFloorDirections, setCurrentFloorDirections] = useState([]);
   const [isRoutingActive, setIsRoutingActive] = useState(false);
 
-  // Helper dynamic router database structural lookups
+  const [startNodeId, setStartNodeId] = useState('');
+  const [endNodeId, setEndNodeId] = useState('');
+
+  // --- Search Dropdown Filter Pipeline ---
+  const fullSearchableRooms = useMemo(() => {
+    const allSelectableItems = [];
+
+    const datasets = [
+      amsF1Data, amsF2Data, amsF3Data,
+      dhsF1Data, dhsF2Data, dhsF3Data, dhsF4Data,
+      enF1Data, enF2Data,
+      hsF1Data, hsF2Data,
+      jhF1Data, jhF2Data, jhF3Data,
+      meF1Data, meF2Data,
+      nbF1Data, nbF2Data, nbF3Data,
+      scF1Data, scF2Data, scF3Data,
+      stpF1Data, stpF2Data,
+      chapelData, libData, spData 
+    ];
+
+    datasets.forEach(floorFile => {
+      if (!floorFile) return;
+      const nodesMap = floorFile.nodes || floorFile;
+      
+      if (typeof nodesMap === 'object' && nodesMap !== null) {
+        Object.keys(nodesMap).forEach(nodeId => {
+          const node = nodesMap[nodeId];
+          if (!node) return;
+
+          const roomName = node.name || node.label || node.roomName || node.id;
+          if (roomName) {
+            const cleanId = String(nodeId).trim();
+            const cleanName = String(roomName).trim();
+            const lowerName = cleanName.toLowerCase();
+
+            const isStructuralNode = 
+              lowerName.startsWith('node') || 
+              lowerName.startsWith('inter') ||
+              lowerName.startsWith('path') ||
+              lowerName.includes('entrance') ||
+              lowerName.includes('exit') ||
+              lowerName.includes('stairs') ||
+              lowerName.includes('staircase') ||
+              lowerName.includes('hallway') ||
+              lowerName.includes('corridor') ||
+              lowerName.includes('door') ||
+              lowerName.includes('bridge') ||
+              lowerName.includes('link');
+
+            if (!isStructuralNode && !allSelectableItems.some(item => item.id === cleanId)) {
+              allSelectableItems.push({
+                id: cleanId,
+                name: cleanName
+              });
+            }
+          }
+        });
+      }
+    });
+
+    if (Array.isArray(locations)) {
+      locations.forEach(loc => {
+        if (loc && loc.name) {
+          const cleanName = String(loc.name).trim();
+          const lowerName = cleanName.toLowerCase();
+          const isStructuralOutdoor = lowerName.includes('entrance') || lowerName.includes('exit');
+
+          if (!isStructuralOutdoor && !allSelectableItems.some(item => item.name.toLowerCase() === lowerName)) {
+            allSelectableItems.push({
+              id: cleanName,
+              name: cleanName
+            });
+          }
+        }
+      });
+    }
+
+    return allSelectableItems;
+  }, [locations]);
+
+  // --- FIXED UNIVERSAL COMPILER: Seamlessly bridges Campus index maps with Indoor text arrays ---
+  const universalMasterGraph = useMemo(() => {
+    const masterNodes = {};
+    const masterConnections = {};
+    
+    // Translation tracker to map numeric indices to descriptive text IDs
+    const indexToAlphaIdMap = {};
+
+    // 1. FIRST PASS: Extract all definitions and map indices for campus routing
+    if (campusRouting && typeof campusRouting === 'object') {
+      const cNodes = campusRouting.nodes || {};
+      Object.keys(cNodes).forEach(indexKey => {
+        const nodeObj = cNodes[indexKey];
+        if (nodeObj) {
+          const textId = String(nodeObj.id || indexKey).trim();
+          indexToAlphaIdMap[String(indexKey).trim()] = textId;
+          masterNodes[textId] = nodeObj;
+        }
+      });
+    }
+
+    // 2. SECOND PASS: Merge connections from your campus files using the translated tracking keys
+    if (campusRouting && campusRouting.connections) {
+      Object.keys(campusRouting.connections).forEach(indexSrc => {
+        const alphaSrc = indexToAlphaIdMap[String(indexSrc).trim()] || String(indexSrc).trim();
+        const rawLinks = campusRouting.connections[indexSrc];
+
+        if (rawLinks && typeof rawLinks === 'object') {
+          if (!masterConnections[alphaSrc]) masterConnections[alphaSrc] = [];
+
+          Object.keys(rawLinks).forEach(indexDest => {
+            const alphaDest = indexToAlphaIdMap[String(indexDest).trim()] || String(indexDest).trim();
+            if (!masterConnections[alphaSrc].includes(alphaDest)) {
+              masterConnections[alphaSrc].push(alphaDest);
+            }
+          });
+        }
+      });
+    }
+
+    // 3. THIRD PASS: Stream in all indoor files and structural models
+    const indoorSources = [
+      amsRouting, dhsRouting, enRouting, hsRouting, jhRouting, meRouting, 
+      nbRouting, scRouting, stpRouting, chapelRouting, libRouting, spRouting,
+      amsF1Data, amsF2Data, amsF3Data, dhsF1Data, dhsF2Data, dhsF3Data, dhsF4Data,
+      enF1Data, enF2Data, hsF1Data, hsF2Data, jhF1Data, jhF2Data, jhF3Data,
+      meF1Data, meF2Data, nbF1Data, nbF2Data, nbF3Data, scF1Data, scF2Data, scF3Data,
+      stpF1Data, stpF2Data, chapelData, libData, spData
+    ];
+
+    indoorSources.forEach(graph => {
+      if (!graph) return;
+      const targetDataset = graph.nodes || graph;
+      if (!targetDataset) return;
+
+      if (Array.isArray(targetDataset)) {
+        targetDataset.forEach(node => {
+          if (!node) return;
+          const rawId = node.id || node.nodeId || node.key;
+          if (!rawId) return;
+
+          const cleanNodeId = String(rawId).trim();
+          if (!masterNodes[cleanNodeId]) masterNodes[cleanNodeId] = node;
+
+          const links = node.connectedTo || node.connections || node.edges;
+          if (Array.isArray(links)) {
+            if (!masterConnections[cleanNodeId]) masterConnections[cleanNodeId] = [];
+
+            links.forEach(linkTarget => {
+              if (!linkTarget) return;
+              const cleanLink = String(linkTarget).trim();
+              
+              if (!masterConnections[cleanNodeId].includes(cleanLink)) {
+                masterConnections[cleanNodeId].push(cleanLink);
+              }
+              if (!masterConnections[cleanLink]) masterConnections[cleanLink] = [];
+              if (!masterConnections[cleanLink].includes(cleanNodeId)) {
+                masterConnections[cleanLink].push(cleanNodeId);
+              }
+            });
+          }
+        });
+      }
+      else if (typeof targetDataset === 'object') {
+        Object.keys(targetDataset).forEach(nodeId => {
+          const node = targetDataset[nodeId];
+          if (!node) return;
+
+          const cleanNodeId = String(nodeId).trim();
+          if (!masterNodes[cleanNodeId]) masterNodes[cleanNodeId] = node;
+
+          const links = node.connectedTo || node.connections || node.edges;
+          if (Array.isArray(links)) {
+            if (!masterConnections[cleanNodeId]) masterConnections[cleanNodeId] = [];
+
+            links.forEach(linkTarget => {
+              if (!linkTarget) return;
+              const cleanLink = String(linkTarget).trim();
+              
+              if (!masterConnections[cleanNodeId].includes(cleanLink)) {
+                masterConnections[cleanNodeId].push(cleanLink);
+              }
+              if (!masterConnections[cleanLink]) masterConnections[cleanLink] = [];
+              if (!masterConnections[cleanLink].includes(cleanNodeId)) {
+                masterConnections[cleanLink].push(cleanNodeId);
+              }
+            });
+          }
+        });
+      }
+    });
+
+    // 4. FOURTH PASS: Inject your manual cross-building linkages array maps
+    const processManualLinks = (linksArray) => {
+      if (Array.isArray(linksArray)) {
+        linksArray.forEach(link => {
+          if (link && link.start && link.end) {
+            const s = String(link.start).trim();
+            const e = String(link.end).trim();
+
+            if (!masterConnections[s]) masterConnections[s] = [];
+            if (!masterConnections[e]) masterConnections[e] = [];
+
+            if (!masterConnections[s].includes(e)) masterConnections[s].push(e);
+            if (!masterConnections[e].includes(s)) masterConnections[e].push(s);
+          }
+        });
+      }
+    };
+
+    processManualLinks(campusLinks);
+    processManualLinks(buildingBridgeLinks);
+
+    return { nodes: masterNodes, connections: masterConnections };
+  }, [campusRouting]);
+
+  const suggestions = useMemo(() => {
+    const currentInputText = activeInput === 'start' ? startLocation : endLocation;
+    if (!currentInputText || currentInputText.trim().length === 0) return [];
+    
+    const lowerText = currentInputText.toLowerCase();
+    return fullSearchableRooms
+      .filter(room => {
+        const nameMatch = room.name && room.name.toLowerCase().includes(lowerText);
+        const idMatch = room.id && room.id.toLowerCase().includes(lowerText);
+        return nameMatch || idMatch;
+      })
+      .slice(0, 5); 
+  }, [startLocation, endLocation, activeInput, fullSearchableRooms]);
+
   const getActiveGraph = () => {
     if (activeBuilding === 'me') return meRouting;
     if (activeBuilding === 'en') return enRouting;
@@ -204,7 +441,6 @@ export default function ExploreScreen({ onProfilePress, isDarkMode }) {
     return amsRouting; 
   };
 
-  // Helper smart entrance translation filter
   const selectSmartEntrance = (buildingName) => {
     if (!buildingName) return "";
     const clean = buildingName.trim();
@@ -212,7 +448,6 @@ export default function ExploreScreen({ onProfilePress, isDarkMode }) {
     return nodes && nodes.length > 0 ? nodes[0] : clean;
   };
 
-  // Auto detect context environment grids whenever positions shuffle
   useEffect(() => {
     const targetQuery = (startLocation + "_" + endLocation + "_" + searchQuery).toLowerCase();
     if (targetQuery.includes('me')) setActiveBuilding('me');
@@ -223,7 +458,6 @@ export default function ExploreScreen({ onProfilePress, isDarkMode }) {
     else if (!startLocation && !endLocation) setActiveBuilding('campus');
   }, [startLocation, endLocation, searchQuery]);
 
-  // Compute live multi-floor map instructions lists
   useEffect(() => {
     if (calculatedPath.length === 0) {
       setCurrentFloorDirections([]);
@@ -254,19 +488,22 @@ export default function ExploreScreen({ onProfilePress, isDarkMode }) {
     setCurrentFloorDirections(steps);
   }, [currentFloor, calculatedPath, activeBuilding]);
 
-  // Handle active execution math loops
   const handleStartRouting = () => {
     Keyboard.dismiss();
     if (!startLocation || !endLocation) {
-      Alert.alert("Missing Input Fields", "Please populate both positions coordinates text frames.");
+      Alert.alert("Missing Input Fields", "Please populate both positions.");
       return;
     }
 
-    const activeRoutingGraph = getActiveGraph();
-    const startId = selectSmartEntrance(startLocation);
-    const endId = selectSmartEntrance(endLocation);
+    const startId = startNodeId || selectSmartEntrance(startLocation);
+    const endId = endNodeId || selectSmartEntrance(endLocation);
 
-    const pathfinder = new BiAStar(activeRoutingGraph);
+    console.log("=== RUNNING PATHFINDER ===");
+    console.log("Start Node ID:", startId, "Connections:", universalMasterGraph.connections[startId]);
+    console.log("End Node ID:", endId, "Connections:", universalMasterGraph.connections[endId]);
+    console.log("==========================");
+
+    const pathfinder = new BiAStar(universalMasterGraph);
     const result = pathfinder.findTwoPaths(startId, endId);
 
     if (result.primary && result.primary.length > 0) {
@@ -279,34 +516,32 @@ export default function ExploreScreen({ onProfilePress, isDarkMode }) {
       setIsRoutingActive(true);
       setCurrentView('map');
     } else {
-      Alert.alert("Navigation Blocked", "No paths maps are walkable across these nodes vectors matrices grids.");
+      Alert.alert("Navigation Blocked", "No path could be calculated between these two points. Please check node linkages.");
     }
   };
 
-  const suggestions = useMemo(() => {
-    const currentInputText = activeInput === 'start' ? startLocation : endLocation;
-    if (!currentInputText || currentInputText.length < 2) return [];
-    return locations
-      .filter(b => b.name.toLowerCase().includes(currentInputText.toLowerCase()))
-      .slice(0, 5);
-  }, [startLocation, endLocation, activeInput]);
-
-  const handleSelectSuggestion = (name) => {
-    if (activeInput === 'start') setStartLocation(name);
-    else setEndLocation(name);
+  const handleSelectSuggestion = (item) => {
+    if (activeInput === 'start') {
+      setStartLocation(item.name);
+      setStartNodeId(item.id); 
+    } else {
+      setEndLocation(item.name);
+      setEndNodeId(item.id); 
+    }
     setActiveInput(null);
   };
 
   const handleReset = () => {
     setStartLocation('');
     setEndLocation('');
+    setStartNodeId('');
+    setEndNodeId('');
     setCalculatedPath([]);
     setAlternativePath([]);
     setIsRoutingActive(false);
     setActiveBuilding('campus');
   };
 
-  // Safe floor heights configurations matrices bounds counts
   let floorCount = 1;
   if (activeBuilding === 'ams') floorCount = 3;
   else if (['me', 'en', 'jh'].includes(activeBuilding)) floorCount = 2;
@@ -351,16 +586,17 @@ export default function ExploreScreen({ onProfilePress, isDarkMode }) {
           calculatedPath={calculatedPath}
           alternativePath={alternativePath}
           onStartPress={handleStartRouting}
+          fullSearchableRooms={fullSearchableRooms}
         />
       )}
 
-      {isRoutingActive && (
+      {isRoutingActive ? (
         <RouteOverlay
           startLocation={startLocation}
           endLocation={endLocation}
           onReset={handleReset}
         />
-      )}
+      ) : null}
     </View>
   );
 }

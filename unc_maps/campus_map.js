@@ -1,43 +1,23 @@
 import * as React from "react";
 import Svg, { Rect, G, Path, Ellipse, Circle, Text, Polyline } from "react-native-svg";
+import nodesData from "./campus_map.json";
 import { Dimensions } from "react-native";
 
-// FIX: Point her node reader safely to your active file path structure!
-import nodesData from "../data/campus_map.json";
-
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
-
-// ========== FIXED EMBEDDED BUILDING DATABASE ==========
-// Directly embedding her parameters here keeps the script robust and standalone!
-const buildingEntrancesData = {
-  "buildings": [
-    { "name": "CC", "entrances": [{ "type": "main", "x": 648.9, "y": 504.6, "nodeId": "48" }] },
-    { "name": "AMS", "entrances": [{ "type": "main", "x": 908, "y": 447, "nodeId": "28" }] },
-    { "name": "JH", "entrances": [{ "type": "main", "x": 486, "y": 301, "nodeId": "33" }] },
-    { "name": "CHAPEL", "entrances": [{ "type": "main", "x": 932, "y": 545, "nodeId": "52" }] },
-    { "name": "DHS", "entrances": [{ "type": "main", "x": 887, "y": 619, "nodeId": "47" }] },
-    { "name": "LIBRARY", "entrances": [{ "type": "main", "x": 778, "y": 673, "nodeId": "46" }] },
-    { "name": "STUDENT PAV", "entrances": [{ "type": "main", "x": 654.5, "y": 640, "nodeId": "20" }] },
-    { "name": "NB", "entrances": [{ "type": "main", "x": 680, "y": 648, "nodeId": "45" }] },
-    { "name": "HS", "entrances": [{ "type": "main", "x": 445, "y": 545, "nodeId": "42" }] },
-    { "name": "EN", "entrances": [{ "type": "main", "x": 374, "y": 537, "nodeId": "37" }] },
-    { "name": "SP", "entrances": [{ "type": "main", "x": 300, "y": 387, "nodeId": "34" }] },
-    { "name": "SCIENCE", "entrances": [{ "type": "main", "x": 398, "y": 627, "nodeId": "40" }] },
-    { "name": "ME", "entrances": [{ "type": "main", "x": 200, "y": 526, "nodeId": "36" }] }
-  ]
-};
-
-// ========== HER ORIGINAL GROUPMATE INTEGRATION LOGIC ==========
-const buildingLocationsFromGroupmate = buildingEntrancesData.buildings.map(b => ({
-    name: b.name,
-    type: 'building',
-    x: b.entrances.find(e => e.type === 'main')?.x || b.entrances[0]?.x,
-    y: b.entrances.find(e => e.type === 'main')?.y || b.entrances[0]?.y,
-}));
-
-// Shared location list for suggestions (merges groupmate's buildings + existing landmarks)
+// Shared location list for suggestions
 export const locations = [
-    ...buildingLocationsFromGroupmate,
+    { name: 'UNC Library', type: 'building', x: 759, y: 745 },
+    { name: 'UNC Chapel', type: 'building', x: 950, y: 580 },
+    { name: 'UNC Covered Court', type: 'building', x: 650, y: 540 },
+    { name: 'AMS Building', type: 'building', x: 850, y: 300 },
+    { name: 'JH Building', type: 'building', x: 480, y: 310 },
+    { name: 'DHS Building', type: 'building', x: 887, y: 680 },
+    { name: 'EN Building', type: 'building', x: 290, y: 590 },
+    { name: 'ME Building', type: 'building', x: 200, y: 526 },
+    { name: 'NB Building', type: 'building', x: 660, y: 700 },
+    { name: 'HS Building', type: 'building', x: 510, y: 600 },
+    { name: 'SP Building', type: 'building', x: 300, y: 387 },
+    { name: 'Science Bldg', type: 'building', x: 330, y: 690 },
     { name: 'Flagpole', type: 'landmark', x: 823, y: 441.9 },
     { name: 'UNC Toblerone', type: 'landmark', x: 914.5, y: 515 },
     { name: 'UNC Fountain', type: 'landmark', x: 943.5, y: 479 },
@@ -49,29 +29,36 @@ export const locations = [
     { name: 'Second Gate', type: 'gate', x: 296, y: 310 },
 ];
 
-const buildingNameToNodeMap = {};
-buildingEntrancesData.buildings.forEach(building => {
-    buildingNameToNodeMap[building.name] = building.entrances.map(e => e.nodeId);
-});
-
+// 1. Translation Map (Make sure these match your 'locations' array names EXACTLY)
 export const nameToNodeMap = {
-    ...buildingNameToNodeMap,
+    "UNC Library": ["18"],
+    "UNC Chapel": ["24"],
+    "UNC Covered Court": ["20", "21", "22", "23"], // North, South, East, West entrances
+    "AMS Building": ["3", "4"],
+    "JH Building": ["6", "7", "8", "69"],           // Multi-wing access
+    "DHS Building": ["19"],
+    "EN Building": ["12", "27", "28"],
+    "ME Building": ["11"],
+    "NB Building": ["17"],
+    "HS Building": ["14", "15", "16"],
+    "SP Building": ["9", "10"],
+    "Science Bldg": ["13", "28"],
     "Flagpole": ["53"],
-    "UNC Toblerone": ["97"],
+    "UNC Toblerone": ["31"],
     "UNC Fountain": ["32"],
-    "UNC Arch": ["55"],
+    "UNC Arch": ["33"],
     "DHS Monument": ["34"],
-    "Eco Canteen": ["96"],
-    "Main Gate Entrance": ["25"],
-    "Main Gate Exit": ["26"],
-    "Second Gate": ["27"]
+    "Eco Canteen": ["30"],
+    "Main Gate Entrance": ["1"],
+    "Main Gate Exit": ["25"],
+    "Second Gate": ["26"]
 };
-
 const SVGComponent = (props) => {
     const { startNode, endNode, paths = { primary: [], alternative: [] } } = props;
 
+    // Get target nodes (all entrances)
     const getTargetNodes = (input) => {
-        if (!input || !nodesData || !nodesData.nodes) return [];
+        if (!input) return [];
 
         const mapped = nameToNodeMap[input];
         if (Array.isArray(mapped) && mapped.length > 0) {
@@ -92,9 +79,11 @@ const SVGComponent = (props) => {
     const startTargets = getTargetNodes(startNode);
     const endTargets = getTargetNodes(endNode);
 
+    // SVG dimensions
     const SVG_WIDTH = 1223;
     const SVG_HEIGHT = 1078;
 
+    // Calculate responsive size - fit portrait phone
     const maxWidth = screenWidth * 0.95;
     const maxHeight = screenHeight * 0.7;
     const aspectRatio = SVG_WIDTH / SVG_HEIGHT;
@@ -167,7 +156,7 @@ const SVGComponent = (props) => {
                 <Circle id="sp_entrance_2" cx={257} cy={473} r={4} fill="#D9D9D9" fillOpacity={0.02} />
                 <Circle id="me_entrance" cx={200} cy={526} r={4} fill="#D9D9D9" fillOpacity={0.02} />
                 <Circle id="en_entrance_1" cx={374} cy={537} r={4} fill="#D9D9D9" fillOpacity={0.02} />
-                <Circle id="sc_entrance_1" cx={398} cy={627} r={4} fill="#D9D9D9" fillOpacity={0.02} />
+                <Circle id="sc_entrance_1" cx={398} cy={623} r={4} fill="#D9D9D9" fillOpacity={0.02} />
                 <Circle id="hs_entrance_1" cx={445} cy={545} r={4} fill="#D9D9D9" fillOpacity={0.02} />
                 <Circle id="hs_entrance_2" cx={484} cy={557} r={4} fill="#D9D9D9" fillOpacity={0.02} />
                 <Circle id="hs_entrance_3" cx={626} cy={623} r={4} fill="#D9D9D9" fillOpacity={0.02} />
@@ -215,7 +204,7 @@ const SVGComponent = (props) => {
                     />
                 )}
 
-                {/* START HIGHLIGHTS */}
+                {/* START HIGHLIGHTS (ALL ENTRANCES) */}
                 {startTargets && startTargets.length > 0 && startTargets.map((t, i) => (
                     <Circle
                         key={`start-${i}`}
@@ -229,7 +218,7 @@ const SVGComponent = (props) => {
                     />
                 ))}
 
-                {/* END HIGHLIGHTS */}
+                {/* END HIGHLIGHTS (ALL ENTRANCES) */}
                 {endTargets && endTargets.length > 0 && endTargets.map((t, i) => (
                     <Circle
                         key={`end-${i}`}
@@ -243,61 +232,34 @@ const SVGComponent = (props) => {
                     />
                 ))}
 
-                {/* LOCATION LABELS - MATCHES THE GEOMETRIC MIDPOINTS OF HER COPY EXACTLY */}
-                {locations.map((b, i) => {
-                    let customX = b.x;
-                    let customY = b.y;
-
-                    // Match her exact visual blueprint positions 
-                    if (b.name === "AMS")         { customX = 775; customY = 300; }
-                    else if (b.name === "JH")     { customX = 450; customY = 310; }
-                    else if (b.name === "CC")     { customX = 648; customY = 515; }
-                    else if (b.name === "SCIENCE"){ customX = 315; customY = 690; }
-                    else if (b.name === "ME")     { customX = 175; customY = 540; }
-                    else if (b.name === "Flagpole"){ customX = 823; customY = 456; }
-                    else if (b.name === "UNC Toblerone") { customX = 914.5; customY = 530; }
-                    else if (b.name === "UNC Fountain")   { customX = 943.5; customY = 494; }
-                    else if (b.name === "UNC Arch")       { customX = 999.5; customY = 513; }
-                    else if (b.name === "DHS Monument")   { customX = 836.5; customY = 711; }
-                    else if (b.name === "Eco Canteen")    { customX = 260; customY = 675; }
-                    else if (b.name === "Main Gate Entrance") { customX = 1093; customY = 539.5; }
-                    else if (b.name === "Main Gate Exit")     { customX = 1099; customY = 561.5; }
-                    else if (b.name === "Second Gate")        { customX = 296; customY = 325; }
-                    else {
-                        // Apply a clean fallback balance point
-                        customY = b.y;
-                    }
-
-                    return (
-                        <G key={`label-${i}`}>
-                            {/* Drop Shadow Outer Glow */}
-                            <Text
-                                x={customX}
-                                y={customY}
-                                fill="white"
-                                fontSize="14"
-                                fontWeight="bold"
-                                textAnchor="middle"
-                                stroke="white"
-                                strokeWidth={3.5}
-                                opacity={0.8}
-                            >
-                                {b.name}
-                            </Text>
-                            {/* Main Title Typography */}
-                            <Text
-                                x={customX}
-                                y={customY}
-                                fill="#333"
-                                fontSize="14"
-                                fontWeight="bold"
-                                textAnchor="middle"
-                            >
-                                {b.name}
-                            </Text>
-                        </G>
-                    );
-                })}
+                {/* LOCATION LABELS */}
+                {locations.map((b, i) => (
+                    <G key={`label-${i}`}>
+                        <Text
+                            x={b.x}
+                            y={b.y - 15}
+                            fill="white"
+                            fontSize="14"
+                            fontWeight="bold"
+                            textAnchor="middle"
+                            stroke="white"
+                            strokeWidth={3}
+                            opacity={0.5}
+                        >
+                            {b.name}
+                        </Text>
+                        <Text
+                            x={b.x}
+                            y={b.y - 15}
+                            fill="#333"
+                            fontSize="14"
+                            fontWeight="bold"
+                            textAnchor="middle"
+                        >
+                            {b.name}
+                        </Text>
+                    </G>
+                ))}
             </G>
         </Svg>
     );

@@ -1,59 +1,80 @@
 // =========================================================================
-//  UNC MAPS - CENTRAL HUB (INDEX)
+// UNC MAPS - FLATTENED CENTRAL HUB (INDEX)
 // =========================================================================
 
-// -------------------------------------------------------------------------
-//  1. USER-FACING SELECTABLE DATA (ROOM LISTS PER FLOOR)
-// -------------------------------------------------------------------------
-// AMS Subfolder
-export { default as amsF1Data } from './data/ams/ams_f1.json';
-export { default as amsF2Data } from './data/ams/ams_f2.json';
-export { default as amsF3Data } from './data/ams/ams_f3.json';
+// 1. DATA FILE EXPORTS (All now local)
+export { default as amsF1Data } from './ams_f1.json';
+export { default as amsF2Data } from './ams_f2.json';
+export { default as amsF3Data } from './ams_f3.json';
+export { default as dhsF1Data } from './dhs_f1.json';
+export { default as dhsF2Data } from './dhs_f2.json';
+export { default as dhsF3Data } from './dhs_f3.json';
+export { default as dhsF4Data } from './dhs_f4.json';
+export { default as enF1Data } from './en_f1.json';
+export { default as enF2Data } from './en_f2.json';
+export { default as hsF1Data } from './hs_f1.json';
+export { default as hsF2Data } from './hs_f2.json';
+export { default as jhF1Data } from './jh_f1.json';
+export { default as jhF2Data } from './jh_f2.json';
+export { default as jhF3Data } from './jh_f3.json';
+export { default as meF1Data } from './me_f1.json';
+export { default as meF2Data } from './me_f2.json';
+export { default as nbF1Data } from './nb_f1.json';
+export { default as nbF2Data } from './nb_f2.json';
+export { default as nbF3Data } from './nb_f3.json';
+export { default as scF1Data } from './sc_f1.json';
+export { default as scF2Data } from './sc_f2.json';
+export { default as scF3Data } from './sc_f3.json';
+export { default as stpF1Data } from './stp_f1.json';
+export { default as stpF2Data } from './stp_f2.json';
+export { default as chapelData } from './chapel.json';
+export { default as libData } from './lib.json';
+export { default as spData } from './sp.json';
+export { default as campusData } from './campus_map.json';
 
-// DHS Subfolder
-export { default as dhsF1Data } from './data/dhs/dhs_f1.json';
+// 2. PATHFINDING GRAPH ROUTINGS
+export { default as amsRouting } from './ams_routing.json';
+export { default as dhsRouting } from './dhs_routing.json';
+export { default as enRouting } from './en_routing.json';
+export { default as hsRouting } from './hs_routing.json';
+export { default as jhRouting } from './jh_routing.json';
+export { default as meRouting } from './me_routing.json';
+export { default as nbRouting } from './nb_routing.json';
+export { default as scRouting } from './sc_routing.json';
+export { default as stpRouting } from './stp_routing.json';
+export { default as chapelRouting } from './chapel_routing.json';
+export { default as libRouting } from './lib_routing.json';
+export { default as spRouting } from './sp_routing.json';
+export { default as campusRouting } from './campus_map_routing.json';
+export { default as campusLinks } from './campus_links.json';
+export { default as buildingBridgeLinks } from './building_bridge_links.json';
 
-// EN Subfolder
-export { default as enF1Data } from './data/en/en_f1.json';
-export { default as enF2Data } from './data/en/en_f2.json';
-
-// JH Subfolder
-export { default as jhF1Data } from './data/jh/jh_f1.json';
-export { default as jhF2Data } from './data/jh/jh_f2.json';
-
-// ME Subfolder
-export { default as meF1Data } from './data/me/me_f1.json';
-export { default as meF2Data } from './data/me/me_f2.json';
-
-export { default as campusData } from './data/campus_map.json';
-
-// -------------------------------------------------------------------------
-//  2. PATHFINDING MAP ROUTES (MASTER SINGLE GRAPH PER BUILDING)
-// -------------------------------------------------------------------------
-export { default as amsRouting } from './data/ams/ams_routing.json';
-export { default as dhsRouting } from './data/dhs/dhs_routing.json';
-export { default as enRouting } from './data/en/en_routing.json';
-export { default as jhRouting } from './data/jh/jh_routing.json';
-export { default as meRouting } from './data/me/me_routing.json';
-export { default as campusRouting } from './data/campus_map_routing.json';
-
-
-// -------------------------------------------------------------------------
-//  3. SVG MAP LAYOUTS (DIRECT IMPORTS)
-// -------------------------------------------------------------------------
-export { default as AmsF1Map } from './buildings/ams_building/ams_floor1.js';
-export { default as AmsF2Map } from './buildings/ams_building/ams_floor2.js';
-export { default as AmsF3Map } from './buildings/ams_building/ams_floor3.js';
-
-export { default as DhsF1Map } from './buildings/dhs_building/dhs_floor1.js';
-
-export { default as EnF1Map } from './buildings/en_building/en_floor1.js';
-export { default as EnF2Map } from './buildings/en_building/en_floor2.js';
-
-export { default as JhF1Map } from './buildings/jh_building/jh_floor1.js';
-export { default as JhF2Map } from './buildings/jh_building/jh_floor2.js';
-
-export { default as MeF1Map } from './buildings/me_building/me_floor1.js';
-export { default as MeF2Map } from './buildings/me_building/me_floor2.js';
-
-export { default as CampusMap } from './buildings/campus_map.js';
+// 3. SVG FLOOR MAP LAYOUTS
+export { default as AmsF1Map } from './ams_floor1.js';
+export { default as AmsF2Map } from './ams_floor2.js';
+export { default as AmsF3Map } from './ams_floor3.js';
+export { default as DhsF1Map } from './dhs_floor1.js';
+export { default as DhsF2Map } from './dhs_floor2.js';
+export { default as DhsF3Map } from './dhs_floor3.js';
+export { default as DhsF4Map } from './dhs_floor4.js';
+export { default as EnF1Map } from './en_floor1.js';
+export { default as EnF2Map } from './en_floor2.js';
+export { default as HsF1Map } from './hs_floor1.js';
+export { default as HsF2Map } from './hs_floor2.js';
+export { default as JhF1Map } from './jh_floor1.js';
+export { default as JhF2Map } from './jh_floor2.js';
+export { default as JhF3Map } from './jh_floor3.js';
+export { default as MeF1Map } from './me_floor1.js';
+export { default as MeF2Map } from './me_floor2.js';
+export { default as NbF1Map } from './nb_floor1.js';
+export { default as NbF2Map } from './nb_floor2.js';
+export { default as NbF3Map } from './nb_floor3.js';
+export { default as ScF1Map } from './sc_floor1.js';
+export { default as ScF2Map } from './sc_floor2.js';
+export { default as ScF3Map } from './sc_floor3.js';
+export { default as StpF1Map } from './stp_floor1.js';
+export { default as StpF2Map } from './stp_floor2.js';
+export { default as ChapelMap } from './chapel.js';
+export { default as LibMap } from './lib.js';
+export { default as SpMap } from './sp.js'; 
+export { default as CampusMap } from './campus_map.js';

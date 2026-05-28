@@ -1,0 +1,14 @@
+{
+"lib_exit_1": {"id": "lib_exit_1", "x": 307.581, "y": 418.652},
+"lib_f1_room_1": {"id": "lib_f1_room_1", "x": 206.953, "y": 407.26},
+"lib_f1_room_2": {"id": "lib_f1_room_2", "x": 206.953, "y": 338.909},
+"lib_f1_room_3": {"id": "lib_f1_room_3", "x": 193.662, "y": 224.041},
+"lib_f1_room_4": {"id": "lib_f1_room_4", "x": 193.662, "y": 171.828},
+"lib_f1_room_5": {"id": "lib_f1_room_5", "x": 408.209, "y": 199.358},
+"lib_f1_room_6": {"id": "lib_f1_room_6", "x": 419.601, "y": 316.125},
+"lib_f1_room_7": {"id": "lib_f1_room_7", "x": 408.209, "y": 344.605},
+"lib_f1_room_8": {"id": "lib_f1_room_8", "x": 408.209, "y": 411.057},
+"lib_f1_int_1": {"id": "lib_f1_int_1", "x": 307.581, "y": 401.564},
+"lib_f1_int_2": {"id": "lib_f1_int_2", "x": 307.581, "y": 342.706},
+"lib_f1_int_3": {"id": "lib_f1_int_3", "x": 307.581, "y": 199.358}
+}

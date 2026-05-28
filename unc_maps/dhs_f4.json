@@ -1,0 +1,19 @@
+{
+  "dhs_f4_room_401": { "id": "dhs_f4_room_401", "x": 355.0, "y": 377.0 },
+  "dhs_f4_room_402": { "id": "dhs_f4_room_402", "x": 493.0, "y": 377.0 },
+  "dhs_f4_room_403": { "id": "dhs_f4_room_403", "x": 631.0, "y": 377.0 },
+  "dhs_f4_room_404": { "id": "dhs_f4_room_404", "x": 1015.0, "y": 377.0 },
+  "dhs_f4_room_407": { "id": "dhs_f4_room_407", "x": 1331.0, "y": 377.0 },
+  "dhs_f4_cr_male": { "id": "dhs_f4_cr_male", "x": 1496.0, "y": 349.0 },
+  "dhs_f4_cr_female": { "id": "dhs_f4_cr_female", "x": 1511.0, "y": 361.0 },
+  "dhs_f4_stair_A_15": { "id": "dhs_f4_stair_A_15", "x": 271.0, "y": 277.0 },
+  "dhs_f4_stair_B_15": { "id": "dhs_f4_stair_B_15", "x": 1490.0, "y": 396.0 },
+  "dhs_f4_int_1": { "id": "dhs_f4_int_1", "x": 324.0, "y": 402.0 },
+  "dhs_f4_int_2": { "id": "dhs_f4_int_2", "x": 355.0, "y": 402.0 },
+  "dhs_f4_int_3": { "id": "dhs_f4_int_3", "x": 493.0, "y": 402.0 },
+  "dhs_f4_int_4": { "id": "dhs_f4_int_4", "x": 631.0, "y": 402.0 },
+  "dhs_f4_int_5": { "id": "dhs_f4_int_5", "x": 1015.0, "y": 402.0 },
+  "dhs_f4_int_6": { "id": "dhs_f4_int_6", "x": 1331.0, "y": 402.0 },
+  "dhs_f4_int_7": { "id": "dhs_f4_int_7", "x": 1459.0, "y": 402.0 },
+  "dhs_f4_int_8": { "id": "dhs_f4_int_8", "x": 1479.0, "y": 367.0 }
+}

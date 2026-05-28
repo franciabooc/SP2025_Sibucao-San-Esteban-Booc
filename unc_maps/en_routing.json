@@ -88,12 +88,8 @@
     "en_f2_int_17": {"id": "en_f2_int_17", "x": 987, "y": 359},
     "en_f2_int_18": {"id": "en_f2_int_18", "x": 1017, "y": 359}
   },
-  "connections": {
-    "en_f1_stair_B_2": {
-      "en_f1_stair_B_1": 23,
-      "en_f2_stair_B_3": 30
-    },
-    "en_f1_stair_B_1": {"en_f1_stair_B_2": 23, "en_f1_int_1": 26},
+ 
+    "connections": {
     "en_f1_int_1": {"en_f1_stair_B_1": 26, "en_f1_int_2": 12},
     "en_f1_int_2": {"en_f1_int_1": 12, "en_f1_room_101": 22, "en_f1_int_3": 80.02},
     "en_f1_room_101": {"en_f1_int_2": 22},
@@ -123,15 +119,6 @@
     "en_f1_int_13": {"en_f1_lobby_A": 56.29, "en_f1_stair_A_1": 43},
     "en_f1_int_14": {"en_f1_lobby_A": 73.39, "en_f1_exit_3": 95},
     "en_f1_exit_3": {"en_f1_int_14": 95},
-    "en_f1_stair_A_1": {"en_f1_int_13": 43, "en_f1_stair_A_2": 58},
-    "en_f1_stair_A_2": {"en_f1_stair_A_1": 58, "en_f1_stair_A_3": 29.02},
-    "en_f1_stair_A_3": {"en_f1_stair_A_2": 29.02, "en_f1_stair_A_4": 15},
-    
-    "en_f1_stair_A_4": {
-      "en_f1_stair_A_3": 15,
-      "en_f2_stair_A_5": 30
-    },
-    
     "en_f1_exit_2": {"en_f1_int_18": 107, "en_f1_int_19": 66},
     "en_f1_int_19": {"en_f1_exit_2": 66, "en_f1_cr_female": 19, "en_f1_int_20": 81},
     "en_f1_cr_female": {"en_f1_int_19": 19},
@@ -146,11 +133,6 @@
     "en_f1_room_116": {"en_f1_int_17": 33},
     "en_f1_exit_1": {"en_f1_int_17": 81},
 
-    "en_f2_stair_B_3": {
-      "en_f2_int_1": 32,
-      "en_f1_stair_B_2": 30
-    },
-    
     "en_f2_int_1": {"en_f2_stair_B_3": 32, "en_f2_int_2": 19},
     "en_f2_int_2": {"en_f2_int_1": 19, "en_f2_room_203": 24, "en_f2_int_3": 107, "en_f2_int_4": 80.1},
     "en_f2_room_203": {"en_f2_int_2": 24},
@@ -179,12 +161,6 @@
     "en_f2_room_213": {"en_f2_int_13": 29},
     "en_f2_room_214": {"en_f2_int_13": 32},
     "en_f2_int_14": {"en_f2_int_13": 106, "en_f2_stair_A_5": 100, "en_f2_int_15": 52},
-    
-    "en_f2_stair_A_5": {
-      "en_f2_int_14": 100,
-      "en_f1_stair_A_4": 30
-    }, 
-    
     "en_f2_int_15": {"en_f2_int_14": 52, "en_f2_room_215": 29, "en_f2_int_16": 28},
     "en_f2_room_215": {"en_f2_int_15": 29},
     "en_f2_int_16": {"en_f2_int_15": 28, "en_f2_room_216": 32, "en_f2_int_17": 107},
@@ -192,6 +168,15 @@
     "en_f2_int_17": {"en_f2_int_16": 107, "en_f2_room_218": 32, "en_f2_int_18": 30},
     "en_f2_room_218": {"en_f2_int_17": 32},
     "en_f2_int_18": {"en_f2_int_17": 30, "en_f2_room_217": 29},
-    "en_f2_room_217": {"en_f2_int_18": 29}
+    "en_f2_room_217": {"en_f2_int_18": 29},
+    
+    "en_f1_stair_A_1": {"en_f1_int_13": 43, "en_f1_stair_A_2": 58},
+    "en_f1_stair_A_2": {"en_f1_stair_A_1": 58, "en_f1_stair_A_3": 29.02},
+    "en_f1_stair_A_3": {"en_f1_stair_A_2": 29.02, "en_f1_stair_A_4": 15},
+    "en_f1_stair_A_4": {"en_f1_stair_A_3": 15, "en_f2_stair_A_5": 30},
+    "en_f1_stair_B_1": {"en_f1_stair_B_2": 23, "en_f1_int_1": 26},
+    "en_f1_stair_B_2": {"en_f1_stair_B_1": 23, "en_f2_stair_B_3": 30},
+    "en_f2_stair_A_5": {"en_f2_int_14": 100, "en_f1_stair_A_4": 30},
+    "en_f2_stair_B_3": {"en_f2_int_1": 32, "en_f1_stair_B_2": 30}
   }
 }

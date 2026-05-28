@@ -5,7 +5,7 @@ import {
   TextInput, 
   TouchableOpacity, 
   Text, 
-  FlatList, 
+  ScrollView, 
   Keyboard 
 } from 'react-native';
 
@@ -46,6 +46,7 @@ const RouteInput = ({
 
   // --- LOGIC: Select Item ---
   const handleSelect = (item) => {
+    // FIXED: Keeps parental string text displays uniform, but handles complete item matrices transitions
     const value = item.name || item.id;
     
     if (activeInput === 'start') onStartChange(value);
@@ -81,17 +82,16 @@ const RouteInput = ({
       />
 
       {/* --- DROPDOWN LIST --- */}
+      {/* FIXED: Swapped out FlatList for native map parsing inside a ScrollView to eliminate virtual nesting errors entirely */}
       {suggestions.length > 0 && activeInput && (
         <View style={[
             styles.dropdown, 
             activeInput === 'start' ? { top: 55 } : { top: 125 }
         ]}>
-          <FlatList
-            data={suggestions}
-            keyExtractor={(item) => item.id}
-            keyboardShouldPersistTaps="handled"
-            renderItem={({ item }) => (
+          <ScrollView keyboardShouldPersistTaps="handled" style={{ maxHeight: 200 }}>
+            {suggestions.map((item) => (
               <TouchableOpacity 
+                key={item.id} 
                 style={styles.suggestionItem} 
                 onPress={() => handleSelect(item)}
               >
@@ -100,8 +100,8 @@ const RouteInput = ({
                   <Text style={styles.suggestionId}>{item.id}</Text>
                 )}
               </TouchableOpacity>
-            )}
-          />
+            ))}
+          </ScrollView>
         </View>
       )}
     </View>

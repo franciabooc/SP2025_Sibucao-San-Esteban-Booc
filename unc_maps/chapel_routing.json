@@ -1,0 +1,14 @@
+{
+  "nodes": {
+    "chapel_exit_1": {"id": "chapel_exit_1", "x": 223.382, "y": 166.636},
+    "chapel_room_ministry": {"id": "chapel_room_ministry", "x": 352.188, "y": 71.1581},
+    "chapel_f1_int_1": {"id": "chapel_f1_int_1", "x": 314.357, "y": 163.934},
+    "chapel_f1_int_2": {"id": "chapel_f1_int_2", "x": 349.485, "y": 117.096}
+  },
+  "connections": {
+    "chapel_exit_1": {"chapel_f1_int_1": 91.01511648621896},
+    "chapel_f1_int_1": {"chapel_exit_1": 91.01511648621896, "chapel_f1_int_2": 58.547200001366406},
+    "chapel_f1_int_2": {"chapel_f1_int_1": 58.547200001366406, "chapel_room_ministry": 46.017353959240204},
+    "chapel_room_ministry": {"chapel_f1_int_2": 46.017353959240204}
+  }
+}

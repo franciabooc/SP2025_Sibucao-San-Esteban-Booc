@@ -1,75 +1,64 @@
 // bidirectional_a_star.js
-import { CampusCellType } from './celltype.js';
+import { CampusCellType } from './celltype.js'; // Keep this as an import since it's local in the same folder
+
+// Bypass all static sibling directory bundle locks using uniform require blocks
+const nodesDataDefault = require('./campus_map.json');
+const { nameToNodeMap } = require('./campus_map.js');
+const graphData = require('./campus_map_routing.json');
+
 
 export class BiAStar {
-    // Dynamically accept the entire specific building graph object (nodes + connections combined)
-    constructor(buildingGraph) {
-        if (!buildingGraph || !buildingGraph.nodes || !buildingGraph.connections) {
-            throw new Error("BiAStar Error: Missing or invalid building routing data passed to constructor.");
-        }
-        this.nodes = buildingGraph.nodes;
-        this.masterConnections = buildingGraph.connections;
+    constructor(nodesDataParam) {
+        // Initializing nodes and connections from your updated file structures
+        const source = nodesDataParam && nodesDataParam.nodes ? nodesDataParam : nodesDataDefault;
+        this.nodes = source.nodes || {};
+        this.masterConnections = (graphData && graphData.connections) ? graphData.connections : {};
         
-        // Setup initial mutable copy for calculation state modifications
+        // currentConnections lets us modify weights (penalties) without ruining the original data
         this.currentConnections = JSON.parse(JSON.stringify(this.masterConnections));
     }
 
-    // Identifies the floor cleanly based on your explicit naming signatures or structural metadata properties
+    // Safely reads explicit metadata properties or matches name string signatures
     getNodeFloor(nodeId) {
         const node = this.nodes[nodeId];
         if (node && node.floor !== undefined) return node.floor;
 
-        // Pattern matching signature backup
-        if (nodeId.includes('_f1_')) return 1;
-        if (nodeId.includes('_f2_')) return 2;
-        if (nodeId.includes('_f3_')) return 3;
-        return 1; // Default floor fallback
+        // Pattern matching signature fallback parsing
+        const match = nodeId.match(/_f(\d+)_/);
+        return match ? parseInt(match[1], 10) : 1; // Default to floor 1 if outdoor/unspecified
     }
 
-    // Heuristic: 3D Euclidean distance calculation (Prevents 2D floor arrival loops)
     heuristic(u, v) {
+        // Estimates distance between two nodes safely supporting multistory transitions
         const uNode = this.nodes[u];
         const vNode = this.nodes[v];
-        if (!uNode || !vNode) return 0;
+        if (!uNode || !vNode) {
+            console.warn(`BiAStar.heuristic: missing node u=${u}(${!!uNode}), v=${v}(${!!vNode})`);
+            return 0;
+        }
 
         const floorU = this.getNodeFloor(u);
         const floorV = this.getNodeFloor(v);
 
-        // Simulated vertical elevation distance value (300 canvas pixels map scale per floor level)
-        const FLOOR_HEIGHT_SCALE = 300; 
-        const dz = (floorU - floorV) * FLOOR_HEIGHT_SCALE;
+        // Simulated vertical elevation value (300 scale penalty to stabilize floor calculations)
+        const dz = (floorU - floorV) * 300;
 
         return Math.sqrt(
             Math.pow(uNode.x - vNode.x, 2) +
             Math.pow(uNode.y - vNode.y, 2) +
-            Math.pow(dz, 2) // Injects the missing Z-axis!
+            Math.pow(dz, 2)
         );
     }
 
-    // Maps building inputs to nodes self-contained without needing mapSvg.js
     getEntrancesForBuilding(buildingNameOrId) {
-        if (!buildingNameOrId) return [];
-        const cleanInput = String(buildingNameOrId).trim().toLowerCase();
-
-        // 1. If the input is already a direct node ID key, just wrap it and return it
-        if (this.nodes[buildingNameOrId]) return [String(buildingNameOrId)];
-        if (this.nodes[cleanInput]) return [cleanInput];
-
-        // 2. Otherwise, look through nodes to see if any node names match this text description
-        const matchedNodeIds = [];
-        for (let id in this.nodes) {
-            const node = this.nodes[id];
-            if (node.name && node.name.toLowerCase() === cleanInput) {
-                matchedNodeIds.push(id);
-            }
-        }
-
-        // 3. Fallback: If no matches found, return the raw string as an ID choice
-        return matchedNodeIds.length > 0 ? matchedNodeIds : [String(buildingNameOrId)];
+        // Converts a building name (like "Library") into its node IDs (like ["18"])
+        const entry = nameToNodeMap[buildingNameOrId];
+        if (entry) return Array.isArray(entry) ? entry : [String(entry)];
+        return [String(buildingNameOrId)];
     }
 
-    // --- MAIN METHOD TO GET BOTH PATHS ---
     findTwoPaths(startInput, endInput) {
+        // Handles the logic for generating both the primary and alternative routes
         const startEntrances = this.getEntrancesForBuilding(startInput);
         const endEntrances = this.getEntrancesForBuilding(endInput);
 
@@ -78,7 +67,7 @@ export class BiAStar {
         let bestStartNode = null;
         let bestEndNode = null;
 
-        // Evaluate all door layout entrance combinations
+        // Nested loop to find the shortest path among all possible entrance/exit combinations
         for (let sId of startEntrances) {
             if (!this.nodes[String(sId)]) continue;
             for (let tId of endEntrances) {
@@ -104,19 +93,20 @@ export class BiAStar {
             return { primary: [], alternative: [], weight: Infinity };
         }
 
-        // Alternative Path Generation: Penalize primary route nodes
+        // Logic for Alternative Path: Penalize the primary route so the algorithm picks a different way
         this.currentConnections = JSON.parse(JSON.stringify(this.masterConnections));
         this.penalizePath(bestPrimaryPath);
         const alternativePathNodes = this.query(bestStartNode, bestEndNode);
 
         return {
-            primary: this.nodesToFullObjects(bestPrimaryPath),
-            alternative: this.nodesToFullObjects(alternativePathNodes),
+            primary: this.nodesToCoords(bestPrimaryPath),
+            alternative: this.nodesToCoords(alternativePathNodes),
             weight: bestPrimaryCost
         };
     }
 
     calculatePathCost(pathIds) {
+        // Totals the weight of all edges in a finished path
         if (!pathIds || pathIds.length < 2) return 0;
         let cost = 0;
         for (let i = 0; i < pathIds.length - 1; i++) {
@@ -125,15 +115,18 @@ export class BiAStar {
             if (this.currentConnections[u] && this.currentConnections[u][v] != null) {
                 cost += this.currentConnections[u][v];
             } else {
-                cost += 1e6;
+                cost += 1e6; // Large penalty for broken/missing paths
             }
         }
         return cost;
     }
 
     penalizePath(pathIds) {
+        // Adds weight to the primary path nodes to force the query to find a different alternative
         if (!pathIds || pathIds.length < 2) return;
 
+        // Allow the first and last segments to be shared without penalty 
+        // (so both paths can easily exit/enter the same building doors)
         let startIndex = (pathIds.length > 4) ? 1 : 0;
         let endIndex = (pathIds.length > 4) ? pathIds.length - 2 : pathIds.length - 1;
 
@@ -151,6 +144,7 @@ export class BiAStar {
     }
 
     query(s, t) {
+        // The Bidirectional A* search engine: starts from BOTH ends and meets in the middle
         if (!s || !t) return [];
         s = String(s);
         t = String(t);
@@ -168,6 +162,7 @@ export class BiAStar {
         let visitedBackward = new Set();
         let meetingNode = null;
 
+        // Alternating search from start and end to optimize speed
         while (qForward.length > 0 && qBackward.length > 0) {
             // Forward step
             qForward.sort((a, b) => a[0] - b[0]);
@@ -190,6 +185,7 @@ export class BiAStar {
     }
 
     expand(u, dists, queue, parents, targetId) {
+        // Core expansion logic: checks neighbors and calculates their priorities (g + h)
         const uKey = String(u);
         const neighbors = this.currentConnections[uKey] || {};
         const Types = CampusCellType || { OBSTACLE: 1, RESTRICTED: 9, CONSTRUCTION: 10, STAIRS: 6 };
@@ -198,19 +194,20 @@ export class BiAStar {
             const nodeInfo = this.nodes[v];
             if (!nodeInfo) continue;
 
+            // Safety check: Skip impassable areas
             if ([Types.OBSTACLE, Types.RESTRICTED, Types.CONSTRUCTION].includes(nodeInfo.type)) {
                 continue;
             }
 
             let weight = neighbors[v];
             
-            // FLOOR LINK STAIR ENHANCEMENT
+            // Explicit multistory stair tracking cost
             if (nodeInfo.type === Types.STAIRS) {
                 const uFloor = this.getNodeFloor(u);
                 const vFloor = this.getNodeFloor(v);
 
                 if (uFloor !== vFloor) {
-                    weight += 40; // Penalty cost for vertical movement up or down
+                    weight += 40; // Penalty cost for vertical movement up or down floors
                 } else {
                     weight += 2;  // standard baseline stairs platform tracking cost
                 }
@@ -219,6 +216,7 @@ export class BiAStar {
             let newDist = dists[u] + weight;
             if (dists[v] === undefined || newDist < dists[v]) {
                 dists[v] = newDist;
+                // A* Priority: Current distance + dynamic structural heuristic estimation
                 let priority = newDist + (this.heuristic(v, targetId) * 0.5);
                 queue.push([priority, v]);
                 parents[v] = u;
@@ -227,31 +225,31 @@ export class BiAStar {
     }
 
     reconstructPathNodes(fParent, bParent, meetingNode) {
+        // Stitches the forward and backward search results together into one full path
         if (!meetingNode) return [];
         let path = [];
         let curr = meetingNode;
         while (curr !== null) {
-            path.unshift(curr);
+            path.unshift(curr); // Backtrack forward parents
             curr = fParent[curr];
         }
         curr = bParent[meetingNode];
         while (curr !== null) {
-            if (curr !== meetingNode) path.push(curr);
+            if (curr !== meetingNode) path.push(curr); // Backtrack backward parents
             curr = bParent[curr];
         }
         return path;
     }
 
-    // Generates full node objects containing x, y, id, and floor context (Better map tracking)
-    nodesToFullObjects(pathIds) {
+    nodesToCoords(pathIds) {
+        // Converts the final list of node IDs into {x, y} coordinates for the Map to draw
         if (!pathIds || pathIds.length === 0) return [];
-        return pathIds.map(id => {
+        const out = [];
+        for (let id of pathIds) {
             const key = String(id);
-            const node = this.nodes[key];
-            const calculatedFloor = this.getNodeFloor(key);
-            return node 
-                ? { ...node, id: key, floor: node.floor || calculatedFloor }
-                : { id: key, x: 0, y: 0, floor: calculatedFloor };
-        });
+            if (!this.nodes[key]) continue;
+            out.push({ x: this.nodes[key].x, y: this.nodes[key].y });
+        }
+        return out;
     }
 }

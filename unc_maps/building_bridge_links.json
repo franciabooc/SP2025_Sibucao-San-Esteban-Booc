@@ -1,0 +1,20 @@
+{
+  "connections": {
+    "ams_f1_link_jh_f1": {"jh_f1_link_ams_f1": 20.0},
+    "jh_f1_link_ams_f1": {"ams_f1_link_jh_f1": 20.0},
+    "ams_f2_link_jh_f2": {"jh_f2_link_ams_f2": 20.0},
+    "jh_f2_link_ams_f2": {"ams_f2_link_jh_f2": 20.0},
+    "ams_f3_link_jh_f3": {"jh_f3_link_ams_f3": 20.0},
+    "jh_f3_link_ams_f3": {"ams_f3_link_jh_f3": 20.0},
+
+    "hs_f1_link_sc_f1": {"sc_f1_link_hs_f1": 20.0},
+    "sc_f1_link_hs_f1": {"hs_f1_link_sc_f1": 20.0},
+    "hs_f2_link_sc_f2": {"sc_f2_link_hs_f2": 20.0},
+    "sc_f2_link_hs_f2": {"hs_f2_link_sc_f2": 20.0},
+    
+    "stp_f1_link_nb_f1": {"nb_f1_link_stp_f1": 20.0},
+    "nb_f1_link_stp_f1": {"stp_f1_link_nb_f1": 20.0},
+    "stp_f1_link_hs_f1": {"hs_f1_link_stp_f1": 20.0},
+    "hs_f1_link_stp_f1": {"stp_f1_link_hs_f1": 20.0}
+  }
+}

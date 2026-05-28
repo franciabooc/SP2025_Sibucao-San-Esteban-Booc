@@ -178,18 +178,11 @@
     "ams_f3_int_19": {"id": "ams_f3_int_19", "x": 1194, "y": 365},
     "ams_f3_int_20": {"id": "ams_f3_int_20", "x": 1260, "y": 408}
   },
-  "connections": {
+
+    "connections": {
     "ams_f1_lobby_A": {"ams_f1_room_122": 49.2, "ams_f1_room_121": 47.2, "ams_f1_stair_A_1": 55.08, "ams_f1_int_22": 55.46},
     "ams_f1_room_122": {"ams_f1_lobby_A": 49.2},
     "ams_f1_room_121": {"ams_f1_lobby_A": 47.2},
-    "ams_f1_stair_A_1": {"ams_f1_lobby_A": 55.08, "ams_f1_stair_A_2": 38.28},
-    "ams_f1_stair_A_2": {"ams_f1_stair_A_1": 38.28, "ams_f1_stair_A_3": 27.78},
-    "ams_f1_stair_A_3": {"ams_f1_stair_A_2": 27.78, "ams_f1_stair_A_4": 13.45},
-
-    "ams_f1_stair_A_4": {
-      "ams_f1_stair_A_3": 13.45,
-      "ams_f2_stair_A_5": 30
-    },
     "ams_f1_int_22": {"ams_f1_lobby_A": 55.46, "ams_f1_room_120": 16.12, "ams_f1_int_21": 76.32},
     "ams_f1_room_120": {"ams_f1_int_22": 16.12},
     "ams_f1_int_21": {"ams_f1_int_22": 76.32, "ams_f1_room_119": 18.03, "ams_f1_int_20": 60.46},
@@ -206,14 +199,6 @@
     "ams_f1_room_114": {"ams_f1_int_16": 18.44},
     "ams_f1_lobby_B": {"ams_f1_int_16": 74.73, "ams_f1_room_113": 30.23, "ams_f1_stair_B_1": 62.24, "ams_f1_int_15": 60.64},
     "ams_f1_room_113": {"ams_f1_lobby_B": 30.23},
-    "ams_f1_stair_B_1": {"ams_f1_lobby_B": 62.24, "ams_f1_stair_B_2": 38},
-    "ams_f1_stair_B_2": {"ams_f1_stair_B_1": 38, "ams_f1_stair_B_3": 33.02},
-    "ams_f1_stair_B_3": {"ams_f1_stair_B_2": 33.02, "ams_f1_stair_B_4": 19},
-
-    "ams_f1_stair_B_4": {
-      "ams_f1_stair_B_3": 19,
-      "ams_f2_stair_B_5": 30
-    },
     "ams_f1_int_15": {"ams_f1_lobby_B": 60.64, "ams_f1_room_112": 16, "ams_f1_int_14": 90.05},
     "ams_f1_room_112": {"ams_f1_int_15": 16},
     "ams_f1_int_14": {"ams_f1_int_15": 90.05, "ams_f1_room_111": 13, "ams_f1_int_13": 13},
@@ -232,14 +217,6 @@
     "ams_f1_room_foodstall": {"ams_f1_int_23": 25.06, "ams_f1_lobby_C": 71.31},
     "ams_f1_lobby_C": {"ams_f1_int_23": 89.27, "ams_f1_room_106": 27.29, "ams_f1_stair_C_1": 38.95, "ams_f1_room_foodstall": 71.31, "ams_f1_int_8": 74.53, "ams_f1_int_24": 52.33},
     "ams_f1_room_106": {"ams_f1_lobby_C": 27.29},
-    "ams_f1_stair_C_1": {"ams_f1_lobby_C": 38.95, "ams_f1_stair_C_2": 50},
-    "ams_f1_stair_C_2": {"ams_f1_stair_C_1": 50, "ams_f1_stair_C_3": 37},
-    "ams_f1_stair_C_3": {"ams_f1_stair_C_2": 37, "ams_f1_stair_C_4": 23},
-
-    "ams_f1_stair_C_4": {
-      "ams_f1_stair_C_3": 23,
-      "ams_f2_stair_C_5": 30
-    },
     "ams_f1_int_8": {"ams_f1_lobby_C": 74.53, "ams_f1_room_105": 12, "ams_f1_int_7": 77, "ams_f1_int_24": 46.04},
     "ams_f1_room_105": {"ams_f1_int_8": 12},
     "ams_f1_int_7": {"ams_f1_int_8": 77, "ams_f1_cr_male": 12, "ams_f1_int_6": 66},
@@ -258,20 +235,9 @@
     "ams_f1_int_1": {"ams_f1_int_2": 75.8, "ams_f1_room_100": 14.32, "ams_f1_link_jh_f1": 91.59},
     "ams_f1_room_100": {"ams_f1_int_1": 14.32},
     "ams_f1_link_jh_f1": {"ams_f1_int_1": 91.59},
+
     "ams_f2_lobby_A": {"ams_f2_room_222": 42.06, "ams_f2_stair_A_5": 34.99, "ams_f2_stair_A_6": 45.18, "ams_f2_int_18": 55.79},
     "ams_f2_room_222": {"ams_f2_lobby_A": 42.06},
-
-    "ams_f2_stair_A_5": {
-      "ams_f2_lobby_A": 34.99,
-      "ams_f1_stair_A_4": 30
-    },
-    "ams_f2_stair_A_6": {"ams_f2_lobby_A": 45.18, "ams_f2_stair_A_7": 34.99},
-    "ams_f2_stair_A_7": {"ams_f2_stair_A_6": 34.99, "ams_f2_stair_A_8": 27.29},
-    "ams_f2_stair_A_8": {"ams_f2_stair_A_7": 27.29, "ams_f2_stair_A_9": 11.66},
-    "ams_f2_stair_A_9": {
-      "ams_f2_stair_A_8": 11.66,
-      "ams_f3_stair_A_10": 30
-    },
     "ams_f2_int_18": {"ams_f2_lobby_A": 55.79, "ams_f2_room_218": 16.4, "ams_f2_int_17": 74.33},
     "ams_f2_room_218": {"ams_f2_int_18": 16.4},
     "ams_f2_int_17": {"ams_f2_int_18": 74.33, "ams_f2_room_217": 17, "ams_f2_int_16": 79.92},
@@ -284,18 +250,6 @@
     "ams_f2_room_214": {"ams_f2_int_14": 17},
     "ams_f2_lobby_B": {"ams_f2_int_14": 99.02, "ams_f2_room_213": 58.6, "ams_f2_stair_B_5": 39.81, "ams_f2_stair_B_6": 39, "ams_f2_int_13": 63.29},
     "ams_f2_room_213": {"ams_f2_lobby_B": 58.6},
-
-    "ams_f2_stair_B_5": {
-      "ams_f2_lobby_B": 39.81,
-      "ams_f1_stair_B_4": 30
-    },
-    "ams_f2_stair_B_6": {"ams_f2_lobby_B": 39, "ams_f2_stair_B_7": 37},
-    "ams_f2_stair_B_7": {"ams_f2_stair_B_6": 37, "ams_f2_stair_B_8": 32},
-    "ams_f2_stair_B_8": {"ams_f2_stair_B_7": 32, "ams_f2_stair_B_9": 11},
-    "ams_f2_stair_B_9": {
-      "ams_f2_stair_B_8": 11,
-      "ams_f3_stair_B_10": 30
-    },
     "ams_f2_int_13": {"ams_f2_lobby_B": 63.29, "ams_f2_room_212": 14, "ams_f2_int_12": 14},
     "ams_f2_room_212": {"ams_f2_int_13": 14},
     "ams_f2_int_12": {"ams_f2_int_13": 14, "ams_f2_room_211": 14, "ams_f2_int_11": 77},
@@ -309,21 +263,8 @@
     "ams_f2_int_8": {"ams_f2_int_9": 77, "ams_f2_room_207": 14, "ams_f2_int_19": 72},
     "ams_f2_room_207": {"ams_f2_int_8": 14},
     "ams_f2_int_19": {"ams_f2_int_8": 72, "ams_f2_stair_C_5": 22.2, "ams_f2_lobby_C": 91.59},
-    "ams_f2_stair_C_5": {
-      "ams_f2_int_19": 22.2,
-      "ams_f2_lobby_C": 78,
-      "ams_f1_stair_C_4": 30
-    },
     "ams_f2_lobby_C": {"ams_f2_stair_C_5": 78, "ams_f2_int_19": 91.59, "ams_f2_room_206": 32.02, "ams_f2_stair_C_6": 46.1, "ams_f2_int_7": 71.06, "ams_f2_int_20": 55.95},
     "ams_f2_room_206": {"ams_f2_lobby_C": 32.02},
-    "ams_f2_stair_C_6": {"ams_f2_lobby_C": 46.1, "ams_f2_stair_C_7": 48},
-    "ams_f2_stair_C_7": {"ams_f2_stair_C_6": 48, "ams_f2_stair_C_8": 38},
-    "ams_f2_stair_C_8": {"ams_f2_stair_C_7": 38, "ams_f2_stair_C_9": 21.02},
-
-    "ams_f2_stair_C_9": {
-      "ams_f2_stair_C_8": 21.02,
-      "ams_f3_stair_C_10": 30
-    },
     "ams_f2_int_7": {"ams_f2_lobby_C": 71.06, "ams_f2_room_205": 14, "ams_f2_int_6": 77},
     "ams_f2_room_205": {"ams_f2_int_7": 14},
     "ams_f2_int_6": {"ams_f2_int_7": 77, "ams_f2_cr_male": 14, "ams_f2_int_5": 64},
@@ -340,12 +281,9 @@
     "ams_f2_int_1": {"ams_f2_int_2": 76.66, "ams_f2_room_200": 15.65, "ams_f2_link_jh_f2": 92.65},
     "ams_f2_room_200": {"ams_f2_int_1": 15.65},
     "ams_f2_link_jh_f2": {"ams_f2_int_1": 92.65},
+
     "ams_f3_room_322": {"ams_f3_lobby_A": 43.01},
     "ams_f3_lobby_A": {"ams_f3_room_322": 43.01, "ams_f3_stair_A_10": 39.4, "ams_f3_int_20": 54.71},
-    "ams_f3_stair_A_10": {
-      "ams_f3_lobby_A": 39.4,
-      "ams_f2_stair_A_9": 30
-    },
     "ams_f3_int_20": {"ams_f3_lobby_A": 54.71, "ams_f3_room_318": 17, "ams_f3_int_19": 78.77},
     "ams_f3_room_318": {"ams_f3_int_20": 17},
     "ams_f3_int_19": {"ams_f3_int_20": 78.77, "ams_f3_room_317": 17.2, "ams_f3_int_18": 76.01},
@@ -357,11 +295,6 @@
     "ams_f3_int_16": {"ams_f3_int_17": 74.06, "ams_f3_room_314": 17, "ams_f3_lobby_B": 96.8},
     "ams_f3_room_314": {"ams_f3_int_16": 17},
     "ams_f3_lobby_B": {"ams_f3_int_16": 96.8, "ams_f3_stair_B_10": 40.31, "ams_f3_room_313": 58.6, "ams_f3_int_15": 64.28},
-
-    "ams_f3_stair_B_10": {
-      "ams_f3_lobby_B": 40.31,
-      "ams_f2_stair_B_9": 30
-    },
     "ams_f3_room_313": {"ams_f3_lobby_B": 58.6},
     "ams_f3_int_15": {"ams_f3_lobby_B": 64.28, "ams_f3_room_312": 14, "ams_f3_int_14": 14},
     "ams_f3_room_312": {"ams_f3_int_15": 14},
@@ -376,12 +309,6 @@
     "ams_f3_int_10": {"ams_f3_int_11": 77, "ams_f3_room_307": 14, "ams_f3_int_9": 65},
     "ams_f3_room_307": {"ams_f3_int_10": 14},
     "ams_f3_int_9": {"ams_f3_int_10": 65, "ams_f3_stair_C_10": 26.42, "ams_f3_lobby_C": 91.92},
-
-    "ams_f3_stair_C_10": {
-      "ams_f3_int_9": 26.42,
-      "ams_f3_lobby_C": 72.8,
-      "ams_f2_stair_C_9": 30
-    },
     "ams_f3_lobby_C": {"ams_f3_int_9": 91.92, "ams_f3_stair_C_10": 72.8, "ams_f3_room_305": 27.29, "ams_f3_int_8": 73.16, "ams_f3_int_5": 57.31},
     "ams_f3_room_305": {"ams_f3_lobby_C": 27.29},
     "ams_f3_int_8": {"ams_f3_lobby_C": 73.16, "ams_f3_room_304": 14, "ams_f3_int_7": 77, "ams_f3_int_5": 46.53},
@@ -399,6 +326,37 @@
     "ams_f3_room_301": {"ams_f3_int_2": 13.42},
     "ams_f3_int_1": {"ams_f3_int_2": 77.52, "ams_f3_room_300": 15.65, "ams_f3_link_jh_f3": 89.59},
     "ams_f3_room_300": {"ams_f3_int_1": 15.65},
-    "ams_f3_link_jh_f3": {"ams_f3_int_1": 89.59}
+    "ams_f3_link_jh_f3": {"ams_f3_int_1": 89.59},
+    
+    "ams_f1_stair_A_1": {"ams_f1_lobby_A": 55.08, "ams_f1_stair_A_2": 38.28},
+    "ams_f1_stair_A_2": {"ams_f1_stair_A_1": 38.28, "ams_f1_stair_A_3": 27.78},
+    "ams_f1_stair_A_3": {"ams_f1_stair_A_2": 27.78, "ams_f1_stair_A_4": 13.45},
+    "ams_f1_stair_A_4": {"ams_f1_stair_A_3": 13.45, "ams_f2_stair_A_5": 30},
+    "ams_f1_stair_B_1": {"ams_f1_lobby_B": 62.24, "ams_f1_stair_B_2": 38},
+    "ams_f1_stair_B_2": {"ams_f1_stair_B_1": 38, "ams_f1_stair_B_3": 33.02},
+    "ams_f1_stair_B_3": {"ams_f1_stair_B_2": 33.02, "ams_f1_stair_B_4": 19},
+    "ams_f1_stair_B_4": {"ams_f1_stair_B_3": 19, "ams_f2_stair_B_5": 30},
+    "ams_f1_stair_C_1": {"ams_f1_lobby_C": 38.95, "ams_f1_stair_C_2": 50},
+    "ams_f1_stair_C_2": {"ams_f1_stair_C_1": 50, "ams_f1_stair_C_3": 37},
+    "ams_f1_stair_C_3": {"ams_f1_stair_C_2": 37, "ams_f1_stair_C_4": 23},
+    "ams_f1_stair_C_4": {"ams_f1_stair_C_3": 23, "ams_f2_stair_C_5": 30},
+    "ams_f2_stair_A_5": {"ams_f2_lobby_A": 34.99, "ams_f1_stair_A_4": 30},
+    "ams_f2_stair_A_6": {"ams_f2_lobby_A": 45.18, "ams_f2_stair_A_7": 34.99},
+    "ams_f2_stair_A_7": {"ams_f2_stair_A_6": 34.99, "ams_f2_stair_A_8": 27.29},
+    "ams_f2_stair_A_8": {"ams_f2_stair_A_7": 27.29, "ams_f2_stair_A_9": 11.66},
+    "ams_f2_stair_A_9": {"ams_f2_stair_A_8": 11.66, "ams_f3_stair_A_10": 30},
+    "ams_f2_stair_B_5": {"ams_f2_lobby_B": 39.81, "ams_f1_stair_B_4": 30},
+    "ams_f2_stair_B_6": {"ams_f2_lobby_B": 39, "ams_f2_stair_B_7": 37},
+    "ams_f2_stair_B_7": {"ams_f2_stair_B_6": 37, "ams_f2_stair_B_8": 32},
+    "ams_f2_stair_B_8": {"ams_f2_stair_B_7": 32, "ams_f2_stair_B_9": 11},
+    "ams_f2_stair_B_9": {"ams_f2_stair_B_8": 11, "ams_f3_stair_B_10": 30},
+    "ams_f2_stair_C_5": {"ams_f2_int_19": 22.2, "ams_f2_lobby_C": 78, "ams_f1_stair_C_4": 30},
+    "ams_f2_stair_C_6": {"ams_f2_lobby_C": 46.1, "ams_f2_stair_C_7": 48},
+    "ams_f2_stair_C_7": {"ams_f2_stair_C_6": 48, "ams_f2_stair_C_8": 38},
+    "ams_f2_stair_C_8": {"ams_f2_stair_C_7": 38, "ams_f2_stair_C_9": 21.02},
+    "ams_f2_stair_C_9": {"ams_f2_stair_C_8": 21.02, "ams_f3_stair_C_10": 30},
+    "ams_f3_stair_A_10": {"ams_f3_lobby_A": 39.4, "ams_f2_stair_A_9": 30},
+    "ams_f3_stair_B_10": {"ams_f3_lobby_B": 40.31, "ams_f2_stair_B_9": 30},
+    "ams_f3_stair_C_10": {"ams_f3_int_9": 26.42, "ams_f3_lobby_C": 72.8, "ams_f2_stair_C_9": 30}
   }
 }

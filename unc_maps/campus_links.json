@@ -1,0 +1,52 @@
+{
+  "connections": {
+    "ams_entrance_1": {"ams_f1_lobby_A": 20.0},
+    "ams_f1_lobby_A": {"ams_entrance_1": 20.0},
+    "ams_entrance_2": {"ams_f1_lobby_C": 20.0},
+    "ams_f1_lobby_C": {"ams_entrance_2": 20.0},
+
+    "jh_entrance_1": {"jh_f1_lobby_A": 20.0},
+    "jh_f1_lobby_A": {"jh_entrance_1": 20.0},
+    "jh_entrance_3": {"jh_f1_lobby_B": 20.0},
+    "jh_f1_lobby_B": {"jh_entrance_3": 20.0},
+    "jh_entrance_2": {"jh_f1_lobby_C": 20.0},
+    "jh_f1_lobby_C": {"jh_entrance_2": 20.0},
+
+    "sp_entrance_1": {"sp_exit_1": 20.0},
+    "sp_exit_1": {"sp_entrance_1": 20.0},
+    "sp_entrance_2": {"sp_f1_int_13": 20.0},
+    "sp_f1_int_13": {"sp_entrance_2": 20.0},
+
+    "me_entrance": {"me_f1_exit_1": 20.0},
+    "me_f1_exit_1": {"me_entrance": 20.0},
+
+    "en_entrance_2": {"en_f1_exit_2": 20.0},
+    "en_f1_exit_2": {"en_entrance_2": 20.0},
+    "en_entrance_1": {"en_f1_exit_1": 20.0},
+    "en_f1_exit_1": {"en_entrance_1": 20.0},
+    "en_entrance_3": {"en_f1_exit_3": 20.0},
+    "en_f1_exit_3": {"en_entrance_3": 20.0},
+
+    "sc_entrance_2": {"sc_f2_exit": 20.0},
+    "sc_f2_exit": {"sc_entrance_2": 20.0},
+    "sc_entrance_1": {"sc_f1_exit": 20.0},
+    "sc_f1_exit": {"sc_entrance_1": 20.0},
+
+    "hs_entrance_1": {"hs_f1_lobby_A": 20.0},
+    "hs_f1_lobby_A": {"hs_entrance_1": 20.0},
+    "hs_entrance_3": {"hs_f1_exit": 20.0},
+    "hs_f1_exit": {"hs_entrance_3": 20.0},
+
+    "nb_entrance_1": {"stp_exit_1": 20.0},
+    "stp_exit_1": {"nb_entrance_1": 20.0},
+
+    "lib_entrance": {"lib_exit_1": 20.0},
+    "lib_exit_1": {"lib_entrance": 20.0},
+
+    "dhs_entrance": {"dhs_f1_lobby_A": 20.0},
+    "dhs_f1_lobby_A": {"dhs_entrance": 20.0},
+    
+    "chapel_entrance": {"chapel_exit_1": 20.0},
+    "chapel_exit_1": {"chapel_entrance": 20.0}
+  }
+}

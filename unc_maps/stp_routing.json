@@ -1,0 +1,30 @@
+{
+  "nodes": {
+    "stp_f1_link_nb_f1": {"id": "stp_f1_link_nb_f1", "x": 164, "y": 540},
+    "stp_f1_link_hs_f1": {"id": "stp_f1_link_hs_f1", "x": 164, "y": 97},
+    "nb_exit_1": {"id": "nb_exit_1", "x": 312, "y": 58},
+    "stp_f1_stair_A_1": {"id": "stp_f1_stair_A_1", "x": 187, "y": 160},
+    "stp_f1_stair_A_2": {"id": "stp_f1_stair_A_2", "x": 187, "y": 272},
+    "stp_f1_int_1": {"id": "stp_f1_int_1", "x": 312, "y": 97},
+    "stp_f1_int_2": {"id": "stp_f1_int_2", "x": 242, "y": 128},
+    "stp_f1_int_3": {"id": "stp_f1_int_3", "x": 242, "y": 346},
+    "stp_f1_int_4": {"id": "stp_f1_int_4", "x": 164, "y": 361},
+    "stp_f2_stair_A_3": {"id": "stp_f2_stair_A_3", "x": 187, "y": 332},
+    "stp_f2_room_canteen": {"id": "stp_f2_room_canteen", "x": 231, "y": 352}
+  },
+
+  "connections": {
+    "stp_f1_int_1": {"stp_f1_link_hs_f1": 148, "stp_f1_int_2": 76.557},
+    "stp_f1_int_2": {"stp_f1_int_1": 76.557, "stp_f1_stair_A_1": 63.632, "stp_f1_int_3": 218},
+    "stp_f1_int_3": {"stp_f1_int_2": 218, "stp_f1_int_4": 79.429},
+    "stp_f1_int_4": {"stp_f1_int_3": 79.429, "stp_f1_link_nb_f1": 179},
+
+    "stp_f2_room_canteen": {"stp_f2_stair_A_3": 48.332},
+    
+    "stp_f1_link_hs_f1": {"stp_f1_int_1": 148, "stp_f1_stair_A_1": 67.067},
+    "stp_f1_stair_A_1": {"stp_f1_int_2": 63.632, "stp_f1_link_hs_f1": 67.067, "stp_f1_stair_A_2": 112},
+    "stp_f1_stair_A_2": {"stp_f1_stair_A_1": 112, "stp_f2_stair_A_3": 50},
+    "stp_f1_link_nb_f1": {"stp_f1_int_4": 179},
+    "stp_f2_stair_A_3": {"stp_f2_room_canteen": 48.332, "stp_f1_stair_A_2": 50}
+  }
+}

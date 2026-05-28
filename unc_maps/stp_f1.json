@@ -1,0 +1,11 @@
+{
+  "stp_f1_link_nb_f1": { "id": "stp_f1_link_nb_f1", "x": 164.0, "y": 540.0 },
+  "stp_f1_link_hs_f1": { "id": "stp_f1_link_hs_f1", "x": 164.0, "y": 97.0 },
+  "nb_exit_1": { "id": "nb_exit_1", "x": 312.0, "y": 58.0 },
+  "stp_f1_stair_A_1": { "id": "stp_f1_stair_A_1", "x": 187.0, "y": 160.0 },
+  "stp_f1_stair_A_2": { "id": "stp_f1_stair_A_2", "x": 187.0, "y": 272.0 },
+  "stp_f1_int_1": { "id": "stp_f1_int_1", "x": 312.0, "y": 97.0 },
+  "stp_f1_int_2": { "id": "stp_f1_int_2", "x": 242.0, "y": 128.0 },
+  "stp_f1_int_3": { "id": "stp_f1_int_3", "x": 242.0, "y": 346.0 },
+  "stp_f1_int_4": { "id": "stp_f1_int_4", "x": 164.0, "y": 361.0 }
+}
